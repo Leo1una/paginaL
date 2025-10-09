@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Observaciones - Preescolar</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-br from-pink-100 to-pink-200 flex flex-col items-center p-6"
+  >
+    <div
+      class="w-full max-w-5xl bg-white shadow-lg rounded-xl p-6 mb-6 text-center"
+    >
+      <h1 class="text-2xl md:text-4xl font-bold text-pink-700">
+        📝 Observaciones - Preescolar
+      </h1>
+      <p class="text-gray-600">Cada alumno tendrá su propia hoja en el PDF</p>
+    </div>
+    <div class="w-full max-w-5xl bg-white shadow-md rounded-xl p-6 mb-6">
+      <label class="block font-semibold text-gray-700 mb-2"
+        >🎨 Seleccionar plantilla:</label
+      >
+      <select
+        id="plantilla"
+        class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-400"
+      >
+        <option value="clasico">📑 Clásico</option>
+        <option value="decorado">🎨 Decorado</option>
+        <option value="corporativo">🏫 Corporativo</option>
+      </select>
+    </div>
+    <div
+      class="w-full max-w-5xl bg-white shadow-md rounded-xl p-6 mb-6 space-y-4"
+    >
+      <label class="block font-semibold text-gray-700"
+        >📋 Lista de alumnos:</label
+      >
+      <textarea
+        id="listaTexto"
+        rows="4"
+        class="w-full border rounded-lg px-4 py-2"
+        placeholder="Escribe o pega aquí la lista de alumnos (uno por línea)"
+      ></textarea>
+      <div class="flex flex-wrap items-center gap-3">
+        <label
+          for="excelFile"
+          class="bg-pink-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-pink-700 cursor-pointer"
+          >📂 Cargar Excel</label
+        >
+        <input
+          type="file"
+          id="excelFile"
+          accept=".xlsx,.xls,.csv"
+          class="hidden"
+        />
+        <button
+          id="btnUsarLista"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-blue-700"
+        >
+          ✅ Usar lista
+        </button>
+        <button
+          id="btnReiniciarLista"
+          class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-red-700"
+        >
+          🔄 Reiniciar lista
+        </button>
+      </div>
+    </div>
+    <div
+      class="w-full max-w-5xl bg-white shadow-md rounded-xl p-6 mb-6 grid md:grid-cols-2 gap-6"
+    >
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2"
+          >Nombre del Maestro (obligatorio):</label
+        >
+        <input
+          id="maestro"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2"
+        />
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2"
+          >Grupo (opcional):</label
+        >
+        <input
+          id="grupo"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2"
+        />
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2"
+          >Institución (opcional):</label
+        >
+        <input
+          id="institucion"
+          type="text"
+          class="w-full border rounded-lg px-4 py-2"
+        />
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2"
+          >Fecha (opcional):</label
+        >
+        <input
+          id="fechaManual"
+          type="date"
+          class="w-full border rounded-lg px-4 py-2"
+        />
+      </div>
+      <div class="md:col-span-2">
+        <label class="block font-semibold text-gray-700 mb-2"
+          >Subir logo(s) (máx 2):</label
+        >
+        <input
+          type="file"
+          id="logos"
+          multiple
+          accept="image/*"
+          class="block w-full text-gray-600"
+        />
+        <p class="text-xs text-gray-500 mt-1">
+          1 logo → izquierda. 2 logos → izquierda y derecha.
+        </p>
+      </div>
+      <div class="md:col-span-2">
+        <label class="block font-semibold text-gray-700 mb-2"
+          >Subir firma del maestro (opcional):</label
+        >
+        <input
+          type="file"
+          id="firma"
+          accept="image/*"
+          class="block w-full text-gray-600"
+        />
+      </div>
+    </div>
+    <div class="w-full max-w-5xl bg-white shadow-md rounded-xl p-6 mb-6">
+      <h2 class="text-lg font-bold mb-4">➕ Campos personalizados</h2>
+      <div class="flex gap-2 mb-4">
+        <input
+          id="campoNombre"
+          type="text"
+          class="flex-1 border rounded-lg px-4 py-2"
+          placeholder="Ej. Lenguajes, Observaciones..."
+        />
+        <button
+          id="btnAgregarCampo"
+          class="bg-green-600 text-white px-4 py-2 rounded-lg"
+        >
+          Agregar
+        </button>
+      </div>
+      <ul id="listaCampos" class="pl-2 text-gray-700 space-y-2"></ul>
+    </div>
+    <div class="flex flex-wrap gap-3 mb-6">
+      <button
+        id="btnPdfSimple"
+        class="bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-pink-700"
+      >
+        📥 Descargar PDF simple (espacios en blanco)
+      </button>
+      <button
+        id="btnMostrarCompleto"
+        class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-700"
+      >
+        💻 Iniciar PDF completo (rellenar todo)
+      </button>
+      <button
+        id="btnLimpiarTodo"
+        class="bg-red-700 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-red-800"
+      >
+        🧹 Limpiar todo
+      </button>
+    </div>
+    <div
+      id="formCompleto"
+      class="w-full max-w-5xl bg-white shadow-md rounded-xl p-6 mb-6 space-y-6 hidden"
+    >
+      <h2 class="text-xl font-bold text-center text-blue-700">
+        Completar campos
+      </h2>
+      <label class="block font-semibold text-gray-700 mb-2"
+        >Seleccionar alumno:</label
+      >
+      <select
+        id="alumnoSelect"
+        class="w-full border rounded-lg px-4 py-2"
+      ></select>
+      <div id="camposForm"></div>
+      <div class="flex flex-wrap gap-3 justify-center">
+        <button
+          id="btnAgregarHoja"
+          class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-green-700"
+        >
+          ➕ Agregar hoja al PDF
+        </button>
+        <button
+          id="btnGuardarCompleto"
+          class="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-800"
+        >
+          💾 Guardar PDF completo
+        </button>
+      </div>
+    </div>
+    <div
+      id="plantillaPDF"
+      class="w-[800px] mx-auto mt-10 bg-white p-8 border rounded-lg hidden"
+    ></div>
+    <script src="{% static 'js/observacionesP.js' %}"></script>
+  </body>
+</html>

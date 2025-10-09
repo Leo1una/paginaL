@@ -1,0 +1,128 @@
+<!-- Bootstrap Icons -->
+<link
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+<nav
+	class="navbar navbar-expand-lg fixed-top navbar-dark shadow-lg bg-black bg-opacity-25">
+	<div class="container-fluid px-4">
+		<div class="d-flex align-items-center gap-2">
+			<i class="bi bi-cpu-fill text-primary fs-4"></i>
+			<a class="navbar-brand fs-4" href="/">&lt;LRLEDEV&gt;</a>
+		</div>
+
+		<div class="widget" id="clock"></div>
+
+		<button
+			class="navbar-toggler"
+			type="button"
+			data-bs-toggle="collapse"
+			data-bs-target="#nav">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse justify-content-end" id="nav">
+			<ul class="navbar-nav mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a
+						href="/"
+						class="nav-link d-flex align-items-center gap-1 {% if request.path == '/' %}active{% endif %}">
+						<i class="bi bi-house-door-fill text-primary"></i>
+						<span>Inicio</span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a
+						href="/maestros/"
+						class="nav-link d-flex align-items-center gap-1 {% if request.path == '/maestros/' %}active{% endif %}">
+						<i class="bi bi-person-badge-fill text-primary"></i>
+						<span>Maestros</span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a
+						href="/qrgenerador/"
+						class="nav-link d-flex align-items-center gap-1 {% if request.path == '/qrgenerador/' %}active{% endif %}">
+						<i class="bi bi-qr-code text-primary"></i>
+						<span>QR Studio</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<script>
+	// Reloj dinámico
+	function clk() {
+		document.getElementById("clock").textContent =
+			new Date().toLocaleTimeString();
+	}
+	setInterval(clk, 1000);
+	clk();
+</script>
+
+<style>
+	.navbar {
+		backdrop-filter: blur(10px);
+		background: rgba(0, 0, 0, 0.5) !important;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.navbar-brand {
+		font-family: "Orbitron", sans-serif;
+		font-weight: 800;
+		color: var(--accent, #3b82f6) !important;
+		animation: glow 2s infinite alternate;
+	}
+
+	@keyframes glow {
+		0% {
+			text-shadow: 0 0 10px var(--accent, #3b82f6);
+		}
+		100% {
+			text-shadow: 0 0 25px #93c5fd;
+		}
+	}
+
+	.nav-link {
+		color: #e2e8f0 !important;
+		transition: all 0.3s ease;
+		border-radius: 8px;
+		padding: 6px 12px;
+	}
+
+	.nav-link:hover {
+		color: #3b82f6 !important;
+		transform: translateY(-2px);
+		background: rgba(59, 130, 246, 0.1);
+		box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+	}
+
+	.nav-link.active {
+		color: #3b82f6 !important;
+		background: rgba(59, 130, 246, 0.15);
+		box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+		font-weight: 600;
+	}
+
+	.nav-link i {
+		transition: all 0.3s ease;
+		color: #3b82f6 !important;
+	}
+
+	.nav-link.active i,
+	.nav-link:hover i {
+		text-shadow: 0 0 10px #3b82f6;
+		transform: scale(1.2);
+	}
+
+	.widget {
+		color: #3b82f6;
+		font-weight: bold;
+		font-family: monospace;
+		text-align: center;
+	}
+</style>

@@ -1,0 +1,91 @@
+{% extends "base.html" %} {% block title %}Maestros | LRLEDEV{% endblock %}
+{%block content %}
+<div class="container text-center mt-5 pt-5">
+	<h1 class="text-3d mb-4">Plataforma Maestros</h1>
+	<p class="text-light lead mb-4">
+		🚧 Esta sección se encuentra en desarrollo. Disponible próximamente.
+	</p>
+
+	<div
+		class="countdown-card skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25 mx-auto"
+		style="max-width: 600px">
+		<h4 class="text-info fw-bold mb-3">
+			Lanzamiento en: <span id="days" class="text-warning fs-3">30</span> días
+		</h4>
+
+		<div
+			class="progress bg-dark bg-opacity-50 border border-primary rounded-4"
+			style="height: 20px">
+			<div
+				id="progressBar"
+				class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+				role="progressbar"
+				style="width: 0%; transition: width 1s ease"></div>
+		</div>
+
+		<p class="mt-4 text-secondary fst-italic">
+			"Cada línea de código nos acerca a una experiencia más inteligente."
+		</p>
+	</div>
+
+	<div class="mt-5">
+		<i class="bi bi-tools text-primary fs-1"></i>
+		<h5 class="text-light mt-3">Estamos trabajando para ti 🚀</h5>
+	</div>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		// Duración total: 30 días en segundos
+		const totalSeconds = 30 * 24 * 60 * 60;
+		let remaining = totalSeconds;
+
+		const daysDisplay = document.getElementById("days");
+		const progressBar = document.getElementById("progressBar");
+
+		function updateCountdown() {
+			const days = Math.floor(remaining / (24 * 60 * 60));
+			const percent = ((totalSeconds - remaining) / totalSeconds) * 100;
+
+			daysDisplay.textContent = days;
+			progressBar.style.width = `${percent}%`;
+
+			if (remaining > 0) {
+				remaining--;
+			} else {
+				clearInterval(timer);
+				document.querySelector(".countdown-card").innerHTML = `
+        <h2 class="text-success fw-bold">¡Disponible ahora!</h2>
+        <p class="text-light">Gracias por tu paciencia. 🎉</p>
+        <a href="/" class="btn btn-primary mt-3 fw-bold rounded-4">Volver al inicio</a>
+      `;
+			}
+		}
+
+		const timer = setInterval(updateCountdown, 1000);
+		updateCountdown();
+	});
+</script>
+
+<style>
+	.countdown-card {
+		backdrop-filter: blur(10px);
+		animation: fadeIn 2s ease;
+	}
+
+	.progress-bar {
+		box-shadow: 0 0 15px #3b82f6, 0 0 30px #60a5fa;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>
+{% endblock %}

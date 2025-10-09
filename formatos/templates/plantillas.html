@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Descargar Plantillas - Evaluaciones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-pink-100 to-pink-200 flex flex-col items-center p-6">
+
+  <div class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-6 mb-6 text-center">
+    <h1 class="text-2xl md:text-4xl font-bold text-pink-700">📂 Descarga de Plantillas</h1>
+    <p class="text-gray-600 mt-2">Selecciona el nivel y descarga la plantilla que necesites.</p>
+  </div>
+
+    <div class="mb-8">
+    <a href="/menu/" class="bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-700 transition">⬅️ Regresar</a>
+  </div>
+
+  <ul class="w-full max-w-4xl bg-white shadow-md rounded-xl divide-y divide-gray-200">
+
+    <!-- Preescolar -->
+    <li class="p-4 hover:bg-gray-50 transition">
+      <h3 class="text-lg font-bold text-pink-600 mb-2">🎨 Preescolar</h3>
+      <p class="text-gray-500 text-sm mb-3">Plantillas para observaciones y evaluaciones.</p>
+      <div class="flex flex-wrap gap-2">
+        <a href="{% static 'downloads/plantillas/plantilla_evaluaciones_30_campos.xlsx' %}" download
+           class="bg-pink-600 text-white px-4 py-2 rounded-lg shadow hover:bg-pink-700">⬇️ Observaciones</a>
+        <a href="{% static 'plantillas/preescolar_evaluaciones.xlsx' %}" download
+           class="bg-pink-500 text-white px-4 py-2 rounded-lg shadow hover:bg-pink-600">⬇️ Evaluaciones</a>
+        <a href="{% static 'plantillas/preescolar_general.xlsx' %}" download
+           class="bg-pink-400 text-white px-4 py-2 rounded-lg shadow hover:bg-pink-500">⬇️ General</a>
+      </div>
+    </li>
+
+    <!-- Primaria -->
+    <li class="p-4 hover:bg-gray-50 transition">
+      <h3 class="text-lg font-bold text-blue-600 mb-2">📘 Primaria</h3>
+      <p class="text-gray-500 text-sm mb-3">Plantillas adaptadas a primaria.</p>
+      <div class="flex flex-wrap gap-2">
+        <a href="{% static 'plantillas/primaria_observaciones.xlsx' %}" download
+           class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">⬇️ Observaciones</a>
+        <a href="{% static 'plantillas/primaria_evaluaciones.xlsx' %}" download
+           class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">⬇️ Evaluaciones</a>
+        <a href="{% static 'plantillas/primaria_general.xlsx' %}" download
+           class="bg-blue-400 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-500">⬇️ General</a>
+      </div>
+    </li>
+
+    <!-- Secundaria -->
+    <li class="p-4 hover:bg-gray-50 transition">
+      <h3 class="text-lg font-bold text-green-600 mb-2">📚 Secundaria</h3>
+      <p class="text-gray-500 text-sm mb-3">Plantillas para secundaria.</p>
+      <div class="flex flex-wrap gap-2">
+        <a href="{% static 'plantillas/secundaria_observaciones.xlsx' %}" download
+           class="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700">⬇️ Observaciones</a>
+        <a href="{% static 'plantillas/secundaria_evaluaciones.xlsx' %}" download
+           class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600">⬇️ Evaluaciones</a>
+        <a href="{% static 'plantillas/secundaria_general.xlsx' %}" download
+           class="bg-green-400 text-white px-4 py-2 rounded-lg shadow hover:bg-green-500">⬇️ General</a>
+      </div>
+    </li>
+
+    <!-- Genéricas -->
+    <li class="p-4 hover:bg-gray-50 transition">
+      <h3 class="text-lg font-bold text-purple-600 mb-2">📑 Genéricas</h3>
+      <p class="text-gray-500 text-sm mb-3">Plantillas aplicables a cualquier nivel.</p>
+      <div class="flex flex-wrap gap-2">
+        <a href="{% static 'plantillas/general_30.xlsx' %}" download
+           class="bg-purple-600 text-white px-4 py-2 rounded-lg shadow hover:bg-purple-700">⬇️ 30 alumnos</a>
+        <a href="{% static 'plantillas/general_campos.xlsx' %}" download
+           class="bg-purple-500 text-white px-4 py-2 rounded-lg shadow hover:bg-purple-600">⬇️ Campos Personalizados</a>
+      </div>
+    </li>
+
+  </ul>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formatos - Primaria</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-6">
+
+  <!-- Título -->
+  <h1 class="text-3xl md:text-5xl font-extrabold text-yellow-600 mb-10 text-center">
+    📘 Formatos de Primaria
+  </h1>
+
+  <!-- Botón para regresar -->
+  <div class="mb-8">
+    <a href="/menu/" 
+       class="bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-blue-700 transition">
+      ⬅️ Regresar al menú principal
+    </a>
+  </div>
+
+  <!-- Contenedor de tarjetas -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+
+    <!-- Observaciones -->
+    <a href="/primaria/observaciones/"
+       class="group bg-white rounded-2xl shadow-md hover:shadow-xl p-8 flex flex-col items-center justify-center transition transform hover:-translate-y-2">
+      <div class="text-5xl mb-4 group-hover:scale-110 transition">📝</div>
+      <h3 class="text-xl font-bold text-blue-800">Observaciones</h3>
+      <p class="text-gray-500 text-sm mt-2">Formato de diagnóstico y observaciones de alumnos.</p>
+    </a>
+
+    <!-- Planeación -->
+    <a href="/primaria/planeacion/"
+       class="group bg-white rounded-2xl shadow-md hover:shadow-xl p-8 flex flex-col items-center justify-center transition transform hover:-translate-y-2">
+      <div class="text-5xl mb-4 group-hover:scale-110 transition">📑</div>
+      <h3 class="text-xl font-bold text-blue-800">Planeación</h3>
+      <p class="text-gray-500 text-sm mt-2">Formato para planeaciones de clase.</p>
+    </a>
+
+    <!-- Evaluaciones -->
+    <a href="/primaria/evaluaciones/"
+       class="group bg-white rounded-2xl shadow-md hover:shadow-xl p-8 flex flex-col items-center justify-center transition transform hover:-translate-y-2">
+      <div class="text-5xl mb-4 group-hover:scale-110 transition">📊</div>
+      <h3 class="text-xl font-bold text-blue-800">Evaluaciones</h3>
+      <p class="text-gray-500 text-sm mt-2">Formato para registro y seguimiento de evaluaciones.</p>
+    </a>
+
+  </div>
+
+</body>
+</html>

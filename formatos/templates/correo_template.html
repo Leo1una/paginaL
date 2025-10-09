@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Mensaje recibido - LRLEDEV</title>
+		<style>
+			body {
+				background: radial-gradient(circle at 20% 30%, #000820, #001a40 90%);
+				color: #e2e8f0;
+				font-family: "Poppins", sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+			.container {
+				max-width: 600px;
+				margin: 40px auto;
+				background: rgba(0, 0, 0, 0.75);
+				border-radius: 16px;
+				border: 1px solid rgba(59, 130, 246, 0.4);
+				box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+				overflow: hidden;
+			}
+			.header {
+				background: linear-gradient(90deg, #001a40, #0a0035, #001a40);
+				color: #60a5fa;
+				text-align: center;
+				padding: 20px 0;
+				font-size: 22px;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				border-bottom: 1px solid rgba(59, 130, 246, 0.6);
+			}
+			.content {
+				padding: 30px;
+				line-height: 1.6;
+			}
+			.content p {
+				font-size: 15px;
+				color: #dbeafe;
+				margin-bottom: 10px;
+			}
+			.highlight {
+				color: #3b82f6;
+				font-weight: 600;
+			}
+			.footer {
+				background: #000820;
+				text-align: center;
+				color: #94a3b8;
+				font-size: 13px;
+				padding: 20px;
+				border-top: 1px solid rgba(59, 130, 246, 0.3);
+			}
+			.footer a {
+				color: #60a5fa;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">📨 Nuevo mensaje desde LRLEDEV</div>
+			<div class="content">
+				<p><b>👤 Nombre:</b> <span class="highlight">{{ nombre }}</span></p>
+				<p><b>📧 Correo:</b> <span class="highlight">{{ correo }}</span></p>
+				<p><b>💬 Mensaje:</b></p>
+				<p style="border-left: 3px solid #3b82f6; padding-left: 10px">
+					{{ mensaje }}
+				</p>
+				<hr
+					style="
+						border: 0;
+						border-top: 1px solid rgba(59, 130, 246, 0.3);
+						margin: 20px 0;
+					" />
+				<p style="text-align: center; font-size: 14px">
+					✨ Este mensaje fue enviado desde el formulario de contacto del
+					portafolio
+					<span class="highlight">LRLEDEV</span>.
+				</p>
+			</div>
+			<div class="footer">
+				© {{ now|default:"2025" }} Leonardo Rafael Luna Estrada<br />
+				🌐 <a href="https://lrledev.com">lrledev.com</a> | 💬
+				<a href="mailto:leonardoluna@lrledev.com">leonardoluna@lrledev.com</a>
+			</div>
+		</div>
+	</body>
+</html>

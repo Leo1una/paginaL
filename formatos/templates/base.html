@@ -1,0 +1,282 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{% block title %}LRLEDEV{% endblock %}</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Poppins:wght@400;500;600&display=swap"
+			rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<style>
+			::-webkit-scrollbar {
+				width: 8px;
+			}
+			::-webkit-scrollbar-track {
+				background: rgba(0, 0, 0, 0.2);
+			}
+			::-webkit-scrollbar-thumb {
+				background: linear-gradient(180deg, #3b82f6, #60a5fa);
+				border-radius: 10px;
+				box-shadow: 0 0 10px #3b82f6;
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background: linear-gradient(180deg, #60a5fa, #679bd6ff);
+			}
+			:root {
+				--accent: #3b82f6;
+				--text: #e2e8f0;
+			}
+			body {
+				background: linear-gradient(270deg, #000820, #0a0035, #001a40, #000820);
+				background-size: 600% 600%;
+				animation: aurora 30s ease infinite;
+				color: var(--text);
+				font-family: "Poppins", sans-serif;
+				overflow-x: hidden;
+				scroll-behavior: smooth;
+				margin: 0;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+			@keyframes aurora {
+				0% {
+					background-position: 0% 50%;
+				}
+				50% {
+					background-position: 100% 50%;
+				}
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+			canvas#particles,
+			canvas#halo {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: -1;
+			}
+			main {
+				flex: 1;
+				padding-top: 110px;
+			}
+			/* === FORMULARIOS UNIVERSALES === */
+			form {
+				background: rgba(10, 20, 40, 0.45);
+				border: 1.5px solid rgba(59, 130, 246, 0.5);
+				border-radius: 20px;
+				padding: 25px;
+				box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+				backdrop-filter: blur(10px);
+				transition: 0.4s ease;
+			}
+			form:hover {
+				box-shadow: 0 0 40px rgba(96, 165, 250, 0.35);
+			}
+
+			label {
+				color: #93c5fd;
+				font-weight: 600;
+				text-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
+				display: block;
+				margin-bottom: 6px;
+			}
+
+			.form-control,
+			.form-select {
+				background: rgba(4, 8, 30, 0.7);
+				color: #e2e8f0;
+				border: 1px solid rgba(59, 130, 246, 0.6);
+				border-radius: 14px;
+				padding: 10px 16px;
+				font-weight: 500;
+				transition: all 0.3s ease;
+			}
+
+			.form-control:focus,
+			.form-select:focus {
+				outline: none;
+				background: rgba(12, 18, 45, 0.85);
+				border-color: #60a5fa;
+				box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
+				color: #fff;
+			}
+
+			::placeholder {
+				color: rgba(100, 180, 255, 0.7);
+				font-style: italic;
+				text-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+			}
+
+			button,
+			.btn {
+				border: 1px solid rgba(59, 130, 246, 0.6);
+				background: linear-gradient(90deg, #1e3a8a, #2563eb);
+				color: #fff;
+				font-weight: 700;
+				border-radius: 12px;
+				transition: all 0.3s ease;
+			}
+			button:hover,
+			.btn:hover {
+				background: linear-gradient(90deg, #2563eb, #60a5fa);
+				box-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
+				transform: scale(1.03);
+			}
+			/* 🔹 Placeholders visibles (más brillantes y con sombra suave) */
+			::placeholder {
+				color: rgba(140, 180, 255, 0.85) !important;
+				font-style: italic;
+				text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+			}
+
+			/* 🔹 Botón “Seleccionar archivo” con estilo azul moderno */
+			input[type="file"] {
+				color: #93c5fd;
+				background-color: rgba(10, 20, 40, 0.6);
+				border: 1px solid rgba(59, 130, 246, 0.5);
+				padding: 10px;
+				border-radius: 12px;
+				width: 100%;
+				font-weight: 500;
+				transition: all 0.3s ease;
+			}
+
+			input[type="file"]::file-selector-button {
+				background: linear-gradient(90deg, #1e3a8a, #2563eb);
+				color: #f8fafc;
+				border: none;
+				padding: 10px 16px;
+				margin-right: 12px;
+				border-radius: 10px;
+				cursor: pointer;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+				box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+				transition: all 0.3s ease;
+			}
+
+			input[type="file"]::file-selector-button:hover {
+				background: linear-gradient(90deg, #2563eb, #60a5fa);
+				box-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
+				transform: scale(1.05);
+			}
+		</style>
+		{% block extra_head %}{% endblock %}
+	</head>
+
+	<body>
+		<canvas id="particles"></canvas>
+		<canvas id="halo"></canvas>
+
+		{% include 'partials/_navbar.html' %}
+
+		<main>{% block content %}{% endblock %}</main>
+
+		{% include 'partials/_footer.html' %}
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script>
+			// ==== FONDO DE PARTÍCULAS ====
+			const c = document.getElementById("particles"),
+				ctx = c.getContext("2d");
+			let p = [];
+			function resize() {
+				c.width = innerWidth;
+				c.height = innerHeight;
+				init();
+			}
+			window.addEventListener("resize", resize);
+			class Particle {
+				constructor(x, y) {
+					this.x = x;
+					this.y = y;
+					this.s = Math.random() * 2 + 1;
+					this.dx = (Math.random() - 0.5) * 0.8;
+					this.dy = (Math.random() - 0.5) * 0.8;
+					this.z = Math.random() * 2;
+				}
+				update() {
+					this.x += this.dx;
+					this.y += this.dy;
+					if (this.x < 0 || this.x > c.width) this.dx *= -1;
+					if (this.y < 0 || this.y > c.height) this.dy *= -1;
+				}
+				draw() {
+					ctx.beginPath();
+					ctx.arc(this.x, this.y, this.s * this.z, 0, Math.PI * 2);
+					ctx.fillStyle = `rgba(59,130,246,${0.6 * this.z})`;
+					ctx.fill();
+				}
+			}
+			function init() {
+				p = [];
+				for (let i = 0; i < (c.width * c.height) / 25000; i++) {
+					p.push(
+						new Particle(Math.random() * c.width, Math.random() * c.height)
+					);
+				}
+			}
+			function connect() {
+				for (let a = 0; a < p.length; a++) {
+					for (let b = a; b < p.length; b++) {
+						const dx = p[a].x - p[b].x,
+							dy = p[a].y - p[b].y,
+							d = Math.sqrt(dx * dx + dy * dy);
+						if (d < 120) {
+							ctx.strokeStyle = `rgba(59,130,246,${1 - d / 120})`;
+							ctx.lineWidth = 0.3;
+							ctx.beginPath();
+							ctx.moveTo(p[a].x, p[a].y);
+							ctx.lineTo(p[b].x, p[b].y);
+							ctx.stroke();
+						}
+					}
+				}
+			}
+			function animate() {
+				ctx.clearRect(0, 0, c.width, c.height);
+				p.forEach((x) => {
+					x.update();
+					x.draw();
+				});
+				connect();
+				requestAnimationFrame(animate);
+			}
+			resize();
+			animate();
+
+			// ==== HALO ====
+			const halo = document.getElementById("halo").getContext("2d");
+			function drawHalo() {
+				const g = halo.createRadialGradient(
+					innerWidth / 2,
+					innerHeight / 2,
+					100,
+					innerWidth / 2,
+					innerHeight / 2,
+					innerWidth / 1.2
+				);
+				g.addColorStop(0, "rgba(59,130,246,0.25)");
+				g.addColorStop(1, "transparent");
+				halo.clearRect(0, 0, innerWidth, innerHeight);
+				halo.fillStyle = g;
+				halo.fillRect(0, 0, innerWidth, innerHeight);
+				requestAnimationFrame(drawHalo);
+			}
+			drawHalo();
+		</script>
+		{% block scripts %}{% endblock %}
+	</body>
+</html>

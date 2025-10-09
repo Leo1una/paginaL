@@ -1,0 +1,1315 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>LRLEDEV | Leonardo Rafael Luna Estrada</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<!-- Bootstrap Icons -->
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+		<link
+			href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap"
+			rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<style>
+			:root {
+				--accent: #3b82f6;
+				--text: #e2e8f0;
+			}
+			body {
+				background: linear-gradient(270deg, #000820, #0a0035, #001a40, #000820);
+				background-size: 600% 600%;
+				animation: aurora 30s ease infinite;
+				color: var(--text);
+				font-family: "Poppins", sans-serif;
+				overflow-x: hidden;
+				scroll-behavior: smooth;
+				margin: 0;
+			}
+			@keyframes aurora {
+				0% {
+					background-position: 0% 50%;
+				}
+				50% {
+					background-position: 100% 50%;
+				}
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+			canvas#particles,
+			canvas#halo {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: -1;
+			}
+			.text-3d {
+				font-family: "Orbitron", sans-serif;
+				font-weight: 800;
+				color: transparent;
+				background: linear-gradient(
+					90deg,
+					var(--accent),
+					#60a5fa,
+					#93c5fd,
+					var(--accent)
+				);
+				-webkit-background-clip: text;
+				background-size: 400% 400%;
+				animation: textshift 8s infinite linear;
+				text-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+			}
+			@keyframes textshift {
+				0% {
+					background-position: 0% 50%;
+				}
+				50% {
+					background-position: 100% 50%;
+				}
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+			h2.section-title {
+				font-family: "Orbitron", sans-serif;
+				font-weight: 700;
+				color: var(--accent);
+				display: inline-block;
+				position: relative;
+			}
+			h2.section-title::after {
+				content: "";
+				position: absolute;
+				left: 0;
+				bottom: -6px;
+				width: 100%;
+				height: 3px;
+				background: linear-gradient(
+					90deg,
+					transparent,
+					var(--accent),
+					transparent
+				);
+				animation: underline 2s infinite linear;
+			}
+			@keyframes underline {
+				0% {
+					background-position: -200px;
+				}
+				100% {
+					background-position: 200px;
+				}
+			}
+			.navbar {
+				backdrop-filter: blur(10px);
+				background: rgba(0, 0, 0, 0.5) !important;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			}
+			.navbar-brand {
+				font-family: "Orbitron", sans-serif;
+				font-weight: 800;
+				color: var(--accent) !important;
+				animation: glow 2s infinite alternate;
+			}
+			@keyframes glow {
+				0% {
+					text-shadow: 0 0 10px var(--accent);
+				}
+				100% {
+					text-shadow: 0 0 25px #93c5fd;
+				}
+			}
+			.nav-link:hover {
+				color: var(--accent) !important;
+			}
+			.photo-frame {
+				width: 230px;
+				height: 230px;
+				border-radius: 50%;
+				border: 2px solid var(--accent);
+				box-shadow: 0 0 30px var(--accent);
+				overflow: hidden;
+				perspective: 1000px;
+				transition: transform 0.5s, box-shadow 0.5s;
+			}
+			.photo-frame:hover {
+				transform: rotateY(10deg) rotateX(8deg) scale(1.05);
+				box-shadow: 0 0 60px var(--accent);
+			}
+			.photo-frame img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				filter: brightness(1.15) saturate(1.25);
+			}
+			section {
+				opacity: 0;
+				transform: translateY(40px);
+				transition: all 1s ease;
+			}
+			section.visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+			footer {
+				text-align: center;
+				padding: 40px 20px;
+				background: rgba(0, 0, 0, 0.5);
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+			}
+			footer a {
+				color: var(--accent);
+				text-decoration: none;
+			}
+			::-webkit-scrollbar {
+				width: 8px;
+			}
+			::-webkit-scrollbar-track {
+				background: rgba(0, 0, 0, 0.2);
+			}
+			::-webkit-scrollbar-thumb {
+				background: linear-gradient(180deg, #3b82f6, #60a5fa);
+				border-radius: 10px;
+				box-shadow: 0 0 10px #3b82f6;
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background: linear-gradient(180deg, #60a5fa, #679bd6ff);
+			}
+			.widget {
+				color: var(--accent);
+				font-weight: bold;
+				font-family: monospace;
+				text-align: center;
+				margin-bottom: 6px;
+			}
+			/* ==== Placeholders visibles y futuristas ==== */
+			::placeholder {
+				color: rgba(100, 180, 255, 0.6) !important;
+				text-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+				font-style: italic;
+			}
+
+			.form-control:focus::placeholder {
+				color: rgba(150, 200, 255, 0.8) !important;
+				text-shadow: 0 0 10px rgba(100, 180, 255, 0.6);
+			}
+
+			/* Bordes y efectos al interactuar */
+			.form-control {
+				border: 1px solid rgba(59, 130, 246, 0.4);
+				transition: all 0.3s ease;
+			}
+
+			.form-control:focus {
+				box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+				border-color: rgba(100, 180, 255, 0.8);
+			}
+			.nav-link i {
+				transition: all 0.3s ease;
+				text-shadow: 0 0 0 transparent;
+			}
+
+			.nav-link:hover i {
+				text-shadow: 0 0 10px var(--accent);
+				transform: scale(1.2);
+			}
+			.navbar {
+				backdrop-filter: blur(10px);
+				background: rgba(0, 0, 0, 0.5) !important;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			}
+
+			.navbar-brand {
+				font-family: "Orbitron", sans-serif;
+				font-weight: 800;
+				color: var(--accent, #3b82f6) !important;
+				animation: glow 2s infinite alternate;
+			}
+
+			@keyframes glow {
+				0% {
+					text-shadow: 0 0 10px var(--accent, #3b82f6);
+				}
+				100% {
+					text-shadow: 0 0 25px #93c5fd;
+				}
+			}
+
+			.nav-link {
+				color: #e2e8f0 !important;
+				transition: all 0.3s ease;
+				border-radius: 8px;
+				padding: 6px 12px;
+			}
+
+			.nav-link:hover {
+				color: #3b82f6 !important;
+				transform: translateY(-2px);
+				background: rgba(59, 130, 246, 0.1);
+				box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+			}
+
+			.nav-link.active {
+				color: #3b82f6 !important;
+				background: rgba(59, 130, 246, 0.15);
+				box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+				font-weight: 600;
+			}
+
+			.nav-link i {
+				transition: all 0.3s ease;
+				color: #3b82f6 !important;
+			}
+
+			.nav-link.active i,
+			.nav-link:hover i {
+				text-shadow: 0 0 10px #3b82f6;
+				transform: scale(1.2);
+			}
+
+			.widget {
+				color: #3b82f6;
+				font-weight: bold;
+				font-family: monospace;
+				text-align: center;
+			}
+
+			/* Selector de idioma */
+			#langSelect {
+				cursor: pointer;
+				transition: all 0.3s ease;
+			}
+
+			#langSelect:hover {
+				box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="particles"></canvas>
+		<canvas id="halo"></canvas>
+		<nav
+			class="navbar navbar-expand-lg fixed-top navbar-dark shadow-lg bg-black bg-opacity-25">
+			<div class="container-fluid px-4">
+				<!-- Marca -->
+				<a
+					class="navbar-brand fs-4 d-flex align-items-center gap-2"
+					href="#hero">
+					<i class="bi bi-cpu-fill text-primary fs-4"></i>
+					&lt;LRLEDEV&gt;
+				</a>
+
+				<!-- Reloj -->
+				<div class="widget" id="clock"></div>
+
+				<!-- Botón responsive -->
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#nav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse justify-content-end" id="nav">
+					<ul class="navbar-nav mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a
+								href="#hero"
+								class="nav-link d-flex align-items-center gap-1 {% if request.path == '/' %}active{% endif %}">
+								<i class="bi bi-house-door-fill text-primary"></i>
+								<span class="lang" data-es="Inicio" data-en="Home">Inicio</span>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a
+								href="#sobre-mi"
+								class="nav-link d-flex align-items-center gap-1">
+								<i class="bi bi-person-fill text-primary"></i>
+								<span class="lang" data-es="Sobre mí" data-en="About Me"
+									>Sobre mí</span
+								>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a
+								href="#educacion"
+								class="nav-link d-flex align-items-center gap-1">
+								<i class="bi bi-mortarboard-fill text-primary"></i>
+								<span class="lang" data-es="Educación" data-en="Education"
+									>Educación</span
+								>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a
+								href="#habilidades"
+								class="nav-link d-flex align-items-center gap-1">
+								<i class="bi bi-lightning-charge-fill text-primary"></i>
+								<span class="lang" data-es="Habilidades" data-en="Skills"
+									>Habilidades</span
+								>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a
+								href="#proyectos"
+								class="nav-link d-flex align-items-center gap-1">
+								<i class="bi bi-kanban-fill text-primary"></i>
+								<span class="lang" data-es="Proyectos" data-en="Projects"
+									>Proyectos</span
+								>
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a
+								href="#contacto"
+								class="nav-link d-flex align-items-center gap-1">
+								<i class="bi bi-envelope-fill text-primary"></i>
+								<span class="lang" data-es="Contacto" data-en="Contact"
+									>Contacto</span
+								>
+							</a>
+						</li>
+					</ul>
+
+					<!-- Selector de idioma -->
+					<div class="ms-3 d-flex align-items-center gap-2">
+						<i class="bi bi-translate text-primary fs-5"></i>
+						<select
+							id="langSelect"
+							class="form-select form-select-sm bg-dark text-light border-0 w-auto rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+							<option value="es">🇲🇽 Español</option>
+							<option value="en">🇺🇸 English</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<section
+			id="hero"
+			class="vh-100 d-flex flex-column flex-md-row align-items-center justify-content-center px-4 text-center text-md-start gap-5">
+			<div>
+				<h1 class="display-5 text-3d mb-3">Leonardo Rafael Luna Estrada</h1>
+				<h2 id="dynamicRole" class="fs-3 fw-semibold h-10 text-light"></h2>
+			</div>
+			<div class="photo-frame">
+				<img src="{% static 'img/LIO.png' %}" alt="Leonardo" />
+			</div>
+		</section>
+
+		<section id="sobre-mi" class="container py-5 text-center">
+			<h2 class="section-title mb-4 lang" data-es="Sobre mí" data-en="About Me">
+				Sobre mí
+			</h2>
+
+			<p
+				class="lead lang skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
+				data-es="Soy un Ingeniero en Sistemas Computacionales con especialidad en Análisis de Datos aplicado al Desarrollo Web. A lo largo de mi trayectoria he diseñado soluciones tecnológicas que integran backend robusto, interfaces limpias y componentes de inteligencia artificial para optimizar la experiencia del usuario y el rendimiento de los sistemas. Domino frameworks como Django y Laravel, lenguajes como Python, PHP y JavaScript, y manejo arquitecturas con MySQL, NoSQL y APIs REST. He desarrollado proyectos de alto impacto como MUVA —un asistente virtual de salud basado en IA— y la plataforma de Vacantes de JSoft Group. Mi objetivo es fusionar el poder de los datos con el diseño inteligente para crear entornos digitales con propósito, eficiencia y un toque humano. Cada línea de código que escribo busca transformar la tecnología en una herramienta para el progreso real."
+				data-en="I am a Computer Systems Engineer specialized in Data Analysis applied to Web Development. Throughout my journey, I have crafted technological solutions that integrate solid backend architectures, clean user interfaces, and artificial intelligence components to enhance performance and user experience. I master frameworks such as Django and Laravel, languages like Python, PHP, and JavaScript, and work with data-driven architectures using MySQL, NoSQL, and REST APIs. I’ve led high-impact projects such as MUVA —an AI-powered virtual health assistant— and the Job Vacancies platform for JSoft Group. My purpose is to merge the power of data with intelligent design to build purposeful, efficient, and human-centered digital environments. Every line of code I write aims to turn technology into a catalyst for real progress.">
+				Soy un Ingeniero en Sistemas Computacionales con especialidad en
+				Análisis de Datos aplicado al Desarrollo Web...
+			</p>
+
+			<p
+				class="text-secondary fst-italic lang mt-4"
+				data-es="«El código es arte cuando transforma datos en experiencias que inspiran.»"
+				data-en="“Code becomes art when it transforms data into experiences that inspire.”">
+				«El código es arte cuando transforma datos en experiencias que
+				inspiran.»
+			</p>
+		</section>
+		<section
+			id="educacion"
+			class="container py-5 text-center position-relative">
+			<h2
+				class="section-title mb-4 lang"
+				data-es="Educación"
+				data-en="Education">
+				Educación
+			</h2>
+
+			<div
+				class="mb-5 skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+				<p
+					class="lang"
+					data-es="🎓 Ingeniería en Sistemas Computacionales con especialidad en Análisis de Datos Aplicado al Desarrollo Web – Instituto Tecnológico Superior del Occidente del Estado de Hidalgo | 2021 – Actualidad"
+					data-en="🎓 Computer Systems Engineering specialized in Data Analysis Applied to Web Development – Technological Institute of Western Hidalgo | 2021 – Present">
+					🎓 Ingeniería en Sistemas Computacionales con especialidad en Análisis
+					de Datos Aplicado al Desarrollo Web – Instituto Tecnológico Superior
+					del Occidente del Estado de Hidalgo | 2021 – Actualidad
+				</p>
+
+				<p
+					class="lang"
+					data-es="💻 Carrera Técnica en Ofimática – CBTIS No.199 Emiliano Zapata | 2018 – 2021"
+					data-en="💻 Technical Career in Office Automation – CBTIS No.199 Emiliano Zapata | 2018 – 2021">
+					💻 Carrera Técnica en Ofimática – CBTIS No.199 Emiliano Zapata | 2018
+					– 2021
+				</p>
+			</div>
+
+			<h3
+				class="section-title fs-4 mb-4 lang"
+				data-es="Cursos y Certificaciones"
+				data-en="Courses & Certifications">
+				Cursos y Certificaciones
+			</h3>
+
+			<div class="row justify-content-center g-4">
+				<div class="col-md-8">
+					<div
+						class="p-4 skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<ul class="list-unstyled mb-0 text-light small text-center">
+							<li>📡 CCNAV7: Introduction to Networks</li>
+							<li>🐧 NDG: Linux Essentials</li>
+							<li>💾 NDG: Linux Unhatched</li>
+							<li>🧭 Introduction to Packet Tracer</li>
+							<li>
+								🧠 Curso de Inmersión en IA – Alura con Google Gemini | Agosto
+								2025
+							</li>
+							<li>🤖 Certificación en Chatbots – Doppler Academy | 2025</li>
+							<li>🌐 CCNA: Redes Empresariales, Seguridad y Automatización</li>
+							<li>🛡️ Fundamentos de Ciberseguridad</li>
+							<li>🎨 CSS Essentials</li>
+							<li>
+								🧩 Gemini y Python: Orquestando LLMs con LangChain – Alura
+							</li>
+							<li>
+								⚙️ TypeScript en la Práctica: Proyecto Completo con Módulos –
+								Alura
+							</li>
+							<li>🚀 Desarrollo con IA – Big School</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<p
+				class="mt-5 text-secondary fst-italic lang"
+				data-es="«El aprendizaje continuo es la base de la evolución tecnológica.»"
+				data-en="“Continuous learning is the foundation of technological evolution.”">
+				«El aprendizaje continuo es la base de la evolución tecnológica.»
+			</p>
+		</section>
+
+		<section id="habilidades" class="py-5 text-center bg">
+			<h2
+				class="section-title mb-4 lang"
+				data-es="Habilidades Técnicas"
+				data-en="Technical Skills">
+				Habilidades Técnicas
+			</h2>
+
+			<div class="row g-4 justify-content-center">
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5
+							class="lang mb-3 text-info"
+							data-es="Lenguajes"
+							data-en="Languages">
+							Lenguajes
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="Python, PHP, Java, JavaScript, TypeScript, HTML, CSS"
+							data-en="Python, PHP, Java, JavaScript, TypeScript, HTML, CSS">
+							⚙️ Python, PHP, Java, JavaScript, TypeScript, HTML, CSS
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5
+							class="lang mb-3 text-info"
+							data-es="Frameworks"
+							data-en="Frameworks">
+							Frameworks
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="Django, Laravel, React, Bootstrap, Tailwind"
+							data-en="Django, Laravel, React, Bootstrap, Tailwind">
+							🧩 Django, Laravel, React, Bootstrap, Tailwind
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5
+							class="lang mb-3 text-info"
+							data-es="Bases de Datos"
+							data-en="Databases">
+							Bases de Datos
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="MySQL, NoSQL, PostgreSQL, MongoDB"
+							data-en="MySQL, NoSQL, PostgreSQL, MongoDB">
+							🗄️ MySQL, NoSQL, PostgreSQL, MongoDB
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5
+							class="lang mb-3 text-info"
+							data-es="Data & AI"
+							data-en="Data & AI">
+							Data & AI
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="Análisis de datos, Inteligencia Artificial, Procesamiento de Información, Machine Learning, LangChain, Gemini"
+							data-en="Data Analysis, Artificial Intelligence, Information Processing, Machine Learning, LangChain, Gemini">
+							🧠 Análisis de datos, IA, Machine Learning, LangChain, Gemini
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5 class="lang mb-3 text-info" data-es="DevOps" data-en="DevOps">
+							DevOps
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="Apache, Debian, Nginx, Samba, XAMPP, Docker, VPS Configuration"
+							data-en="Apache, Debian, Nginx, Samba, XAMPP, Docker, VPS Configuration">
+							☁️ Apache, Debian, Nginx, Docker, VPS, Samba, XAMPP
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5
+							class="lang mb-3 text-info"
+							data-es="Automatización & APIs"
+							data-en="Automation & APIs">
+							Automatización & APIs
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="Automatización de procesos, APIs REST, Webhooks, Integración con IA, Scraping, Flask Microservices"
+							data-en="Process Automation, REST APIs, Webhooks, AI Integration, Scraping, Flask Microservices">
+							⚡ Automatización de procesos, APIs REST, Webhooks, IA Integrada
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5
+							class="lang mb-3 text-info"
+							data-es="Ciberseguridad & Control"
+							data-en="Cybersecurity & Control">
+							Ciberseguridad & Control
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="Gestión de acceso, cifrado, control de sesiones, auditoría y monitoreo de red"
+							data-en="Access management, encryption, session control, auditing and network monitoring">
+							🔐 Seguridad, cifrado, monitoreo, auditorías
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div
+						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						<h5 class="lang mb-3 text-info" data-es="Otros" data-en="Others">
+							Otros
+						</h5>
+						<p
+							class="lang text-light small"
+							data-es="Git, GitHub, VS Code, APIs externas, gestión de proyectos, metodologías ágiles"
+							data-en="Git, GitHub, VS Code, External APIs, Project Management, Agile Methodologies">
+							🧰 Git, GitHub, VS Code, APIs externas, metodologías ágiles
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="proyectos" class="container py-5 text-center">
+			<h2
+				class="section-title mb-5 lang"
+				data-es="Proyectos Destacados"
+				data-en="Featured Projects">
+				Proyectos Destacados
+			</h2>
+
+			<div class="row g-4 justify-content-center">
+				<!-- MUVA -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								MUVA – Asistente Médico Virtual
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Desarrollo de un asistente médico virtual con IA para el monitoreo de salud y recomendaciones personalizadas."
+								data-en="Development of an AI medical assistant for health monitoring and personalized recommendations.">
+								Asistente médico virtual con IA para monitoreo y
+								recomendaciones.
+							</p>
+							<p class="text-info small mb-1">
+								Python, Django, JavaScript, HTML, MySQL
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							ITSOEH | Enero 2024 – Mayo 2024
+						</p>
+					</div>
+				</div>
+
+				<!-- Artículo MUVA -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								Artículo Científico – MUVA
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Publicación del artículo 'MUVA: Asistente Virtual Basado en Inteligencia Artificial para el Monitoreo y Recomendación Personalizada de Salud' en el libro Avances Científicos y Tecnológicos en México 2025."
+								data-en="Publication of the article 'MUVA: AI-Based Virtual Assistant for Personalized Health Monitoring and Recommendations' in the book Scientific and Technological Advances in Mexico 2025.">
+								Publicación del artículo científico sobre MUVA en Avances
+								Científicos y Tecnológicos en México 2025.
+							</p>
+							<p class="text-info small mb-1">
+								Investigación | IA, Ciencia de Datos, Django, Gemini
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Marzo 2025 | Ed. Tecnológica Nacional
+						</p>
+					</div>
+				</div>
+
+				<!-- Sistema de Vacantes -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								Sistema de Vacantes – JSoft Group
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Plataforma web con APIs REST, roles y autenticación para gestión de vacantes empresariales."
+								data-en="Web platform with REST APIs, roles, and authentication for enterprise vacancy management.">
+								Plataforma profesional para gestión de vacantes con
+								autenticación avanzada.
+							</p>
+							<p class="text-info small mb-1">
+								Django, REST API, Bootstrap, MySQL
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							JSoft Group Puebla | Mayo 2025
+						</p>
+					</div>
+				</div>
+
+				<!-- Ensamblador -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								Simulador Ensamblador
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Desarrollo de simulador educativo con JavaScript y Ensamblador para prácticas de arquitectura de computadoras."
+								data-en="Educational simulator using JavaScript and Assembly for computer architecture training.">
+								Simulador educativo implementado en JavaScript y Ensamblador.
+							</p>
+							<p class="text-info small mb-1">
+								JavaScript, Ensamblador, HTML, MySQL
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							ITSOEH | Ago 2023 – Dic 2023
+						</p>
+					</div>
+				</div>
+
+				<!-- RECIOIL -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								RECIOIL – Sitio sobre Reciclaje
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Desarrollo de un sitio informativo sobre reciclaje de aceite de cocina con enfoque ecológico."
+								data-en="Development of an informative website about cooking oil recycling with ecological focus.">
+								Sitio informativo sobre reciclaje de aceite con enfoque
+								ecológico.
+							</p>
+							<p class="text-info small mb-1">JavaScript, HTML, MySQL, MVC</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							ITSOEH | Ago 2024 – Dic 2024
+						</p>
+					</div>
+				</div>
+
+				<!-- Centro de Información -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								Centro de Información – ITSOEH
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Diseño y desarrollo de portal informativo institucional con base de datos y panel de administración."
+								data-en="Design and development of an institutional information portal with database and admin panel.">
+								Portal informativo institucional con base de datos y panel
+								administrativo.
+							</p>
+							<p class="text-info small mb-1">
+								PHP, Laravel, HTML, MySQL, JavaScript
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							ITSOEH | Ago 2024 – Dic 2024
+						</p>
+					</div>
+				</div>
+
+				<!-- AQUASENSE -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								AQUASENSE – Monitoreo del Agua
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Prototipo inteligente para monitoreo de calidad del agua con sensores IoT y análisis de datos."
+								data-en="Smart prototype for water quality monitoring using IoT sensors and data analysis.">
+								Prototipo inteligente con sensores IoT y monitoreo en tiempo
+								real.
+							</p>
+							<p class="text-info small mb-1">
+								Python, IoT, Arduino, MySQL, HTML
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">ITSOEH | 2024</p>
+					</div>
+				</div>
+
+				<!-- DataVision -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">DataVision AI</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Dashboard avanzado para visualización de datos médicos mediante Python y Gemini API."
+								data-en="Advanced dashboard for medical data visualization using Python and Gemini API.">
+								Dashboard avanzado para visualización y análisis predictivo de
+								datos.
+							</p>
+							<p class="text-info small mb-1">
+								Python, Django, Chart.js, Gemini API
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+					</div>
+				</div>
+
+				<!-- AutoLink -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								AutoLink – Automatización Inteligente
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Sistema de automatización que integra APIs REST y procesos en segundo plano para tareas repetitivas."
+								data-en="Automation system integrating REST APIs and background processes for repetitive tasks.">
+								Sistema de automatización que conecta APIs y gestiona flujos
+								automáticos.
+							</p>
+							<p class="text-info small mb-1">
+								Python, Flask, REST, CRON, Gemini
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+					</div>
+				</div>
+
+				<!-- Plataforma Maestros -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								Plataforma de Gestión Docente
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Sistema académico para maestros y estudiantes con reportes automatizados y login seguro."
+								data-en="Academic platform for teachers and students with automated reports and secure login.">
+								Sistema académico con reportes automáticos y autenticación
+								segura.
+							</p>
+							<p class="text-info small mb-3">
+								Python (Django), Bootstrap, JavaScript, MySQL
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+						<a
+							href="/maestros"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto"
+							>Ver Proyecto</a
+						>
+					</div>
+				</div>
+
+				<!-- QR Generator -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">QR Studio LRLEDEV</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Crea códigos QR personalizados para enlaces, correos, teléfonos, WhatsApp, texto o Wi-Fi. Personaliza colores, formas y logos fácilmente."
+								data-en="Create custom QR codes for links, emails, phones, WhatsApp, text, or Wi-Fi. Easily customize colors, shapes, and logos.">
+								Genera códigos QR con estilo profesional y opciones de
+								personalización avanzada: colores, logos, formas y descargas en
+								PNG o SVG.
+							</p>
+							<p class="text-info small mb-3">
+								Python (Django), qrcode, Pillow, HTML5, Bootstrap
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+						<a
+							href="/qrgenerador/"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto"
+							>Probar Generador QR</a
+						>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="contacto" class="py-5 text-center">
+			<h2 class="section-title mb-4 lang" data-es="Contacto" data-en="Contact">
+				Contacto
+			</h2>
+			<form
+				id="contactForm"
+				method="POST"
+				class="mx-auto p-4 rounded-4 shadow-lg skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
+				style="
+					max-width: 400px;
+					background: rgba(255, 255, 255, 0.08);
+					border: 1px solid rgba(59, 130, 246, 0.3);
+				">
+				{% csrf_token %}
+				<input
+					name="nombre"
+					id="nombreInput"
+					type="text"
+					placeholder="Nombre / Name"
+					required
+					class="form-control bg-dark text-light mb-3 border-primary lang-placeholder rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
+					data-es="Nombre"
+					data-en="Name" />
+
+				<input
+					name="email"
+					id="emailInput"
+					type="email"
+					placeholder="Correo / Email"
+					required
+					class="form-control bg-dark text-light mb-3 border-primary lang-placeholder rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
+					data-es="Correo electrónico"
+					data-en="Email" />
+
+				<textarea
+					name="mensaje"
+					id="mensajeInput"
+					rows="4"
+					placeholder="Mensaje / Message"
+					required
+					class="form-control bg-dark text-light mb-3 border-primary lang-placeholder rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
+					data-es="Mensaje"
+					data-en="Message"></textarea>
+
+				<button
+					type="submit"
+					class="btn btn-primary w-100 fw-bold lang rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
+					data-es=" Enviar Mensaje"
+					data-en=" Send Message">
+					Enviar Mensaje
+				</button>
+			</form>
+		</section>
+
+		<footer class="shadow-lg bg-black bg-opacity-25 text-center py-4">
+			<p>
+				<i class="bi bi-envelope-fill text-primary"></i>
+				<a
+					href="mailto:leonardoluna@lrledev.com"
+					class="text-info text-decoration-none"
+					>leonardoluna@lrledev.com</a
+				>
+				&nbsp;|&nbsp;
+				<i class="bi bi-github text-light"></i>
+				<a
+					href="https://github.com/leo1una"
+					target="_blank"
+					class="text-info text-decoration-none"
+					>GitHub</a
+				>
+				&nbsp;|&nbsp;
+				<i class="bi bi-whatsapp text-success"></i>
+				<a
+					href="https://wa.me/527732311460"
+					target="_blank"
+					class="text-info text-decoration-none"
+					>WhatsApp</a
+				>
+			</p>
+
+			<p class="mt-3 text-secondary small mb-1">
+				© <span id="year"></span> Leonardo Rafael Luna Estrada | LRLEDEV
+			</p>
+
+			<p class="quote mt-1 text-primary fst-italic">
+				<i class="bi bi-lightning-charge-fill"></i>
+				<span
+					id="footer-phrase"
+					data-es="El futuro no se programa, se imagina, se construye y se transforma."
+					data-en="The future isn't programmed — it's imagined, built, and transformed.">
+					El futuro no se programa, se imagina, se construye y se transforma.
+				</span>
+			</p>
+
+			<div class="widget text-info mt-2" id="visits"></div>
+		</footer>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script>
+			// ✅ 1. Scroll automático al cargar
+			window.addEventListener("load", () => {
+				if (window.location.pathname === "/") {
+					window.location.hash = "#hero";
+				}
+			});
+			// ==== AÑO Y ANIMACIONES ====
+			const y = new Date().getFullYear();
+			document.getElementById("year").textContent = y;
+
+			// ==== PARTÍCULAS DE FONDO ====
+			const c = document.getElementById("particles"),
+				ctx = c.getContext("2d");
+			let p = [];
+			function r() {
+				c.width = innerWidth;
+				c.height = innerHeight;
+				i();
+			}
+			window.addEventListener("resize", r);
+			class P {
+				constructor(x, y) {
+					this.x = x;
+					this.y = y;
+					this.s = Math.random() * 2 + 1;
+					this.dx = (Math.random() - 0.5) * 0.8;
+					this.dy = (Math.random() - 0.5) * 0.8;
+					this.z = Math.random() * 2;
+				}
+				u() {
+					this.x += this.dx;
+					this.y += this.dy;
+					if (this.x < 0 || this.x > c.width) this.dx *= -1;
+					if (this.y < 0 || this.y > c.height) this.dy *= -1;
+				}
+				d() {
+					ctx.beginPath();
+					ctx.arc(this.x, this.y, this.s * this.z, 0, Math.PI * 2);
+					ctx.fillStyle = `rgba(59,130,246,${0.6 * this.z})`;
+					ctx.fill();
+				}
+			}
+			function i() {
+				p = [];
+				for (let n = 0; n < (c.width * c.height) / 25000; n++)
+					p.push(new P(Math.random() * c.width, Math.random() * c.height));
+			}
+			function con() {
+				for (let a = 0; a < p.length; a++) {
+					for (let b = a; b < p.length; b++) {
+						const dx = p[a].x - p[b].x,
+							dy = p[a].y - p[b].y,
+							d = Math.sqrt(dx * dx + dy * dy);
+						if (d < 120) {
+							ctx.strokeStyle = `rgba(59,130,246,${1 - d / 120})`;
+							ctx.lineWidth = 0.3;
+							ctx.beginPath();
+							ctx.moveTo(p[a].x, p[a].y);
+							ctx.lineTo(p[b].x, p[b].y);
+							ctx.stroke();
+						}
+					}
+				}
+			}
+			function a() {
+				ctx.clearRect(0, 0, c.width, c.height);
+				p.forEach((x) => {
+					x.u();
+					x.d();
+				});
+				con();
+				requestAnimationFrame(a);
+			}
+			r();
+			a();
+
+			// ==== HALO ====
+			const halo = document.getElementById("halo").getContext("2d");
+			function drawHalo() {
+				const g = halo.createRadialGradient(
+					innerWidth / 2,
+					innerHeight / 2,
+					100,
+					innerWidth / 2,
+					innerHeight / 2,
+					innerWidth / 1.2
+				);
+				g.addColorStop(0, "rgba(59,130,246,0.25)");
+				g.addColorStop(1, "transparent");
+				halo.clearRect(0, 0, innerWidth, innerHeight);
+				halo.fillStyle = g;
+				halo.fillRect(0, 0, innerWidth, innerHeight);
+				requestAnimationFrame(drawHalo);
+			}
+			drawHalo();
+
+			// ==== RELOJ ====
+			function clk() {
+				document.getElementById("clock").textContent =
+					new Date().toLocaleTimeString();
+			}
+			setInterval(clk, 1000);
+			clk();
+
+			// ==== VISITAS ====
+			let v = localStorage.getItem("visits") || 0;
+			v++;
+			localStorage.setItem("visits", v);
+
+			// ==== TRADUCCIÓN ====
+			const langSel = document.getElementById("langSelect");
+			function applyLang(l) {
+				updatePlaceholders(l);
+
+				document.querySelectorAll(".lang").forEach((e) => {
+					e.textContent = e.dataset[l];
+				});
+				localStorage.setItem("lang", l);
+
+				// Traducción de roles dinámicos y contador
+				if (l === "es") {
+					roles = [
+						"Ingeniero en Sistemas",
+						"Desarrollador Web",
+						"Analista de Datos",
+						"Creador de IA",
+					];
+					document.getElementById("visits").textContent = `👁️ Visitas: ${v}`;
+				} else {
+					roles = [
+						"Systems Engineer",
+						"Web Developer",
+						"Data Analyst",
+						"AI Creator",
+					];
+					document.getElementById("visits").textContent = `👁️ Visits: ${v}`;
+				}
+			}
+			langSel.value = localStorage.getItem("lang") || "es";
+			let roles = [];
+			applyLang(langSel.value);
+			langSel.onchange = () => applyLang(langSel.value);
+
+			// ==== ROL DINÁMICO ====
+			let rI = 0;
+			const dyn = document.getElementById("dynamicRole");
+			function changeRole() {
+				dyn.innerHTML = "";
+				const t = roles[rI];
+				let i = 0;
+				const ty = setInterval(() => {
+					dyn.innerHTML = `<span style='color:#3B82F6;text-shadow:0 0 ${
+						i % 10
+					}px #60A5FA'>${t.substring(0, i++)}</span>`;
+					if (i > t.length) {
+						clearInterval(ty);
+						setTimeout(() => {
+							rI = (rI + 1) % roles.length;
+							changeRole();
+						}, 1500);
+					}
+				}, 100);
+			}
+			changeRole();
+
+			// ==== APARICIÓN SUAVE ====
+			const sct = document.querySelectorAll("section"),
+				obs = new IntersectionObserver(
+					(e) => {
+						e.forEach((x) => {
+							if (x.isIntersecting) x.target.classList.add("visible");
+						});
+					},
+					{ threshold: 0.1 }
+				);
+			sct.forEach((x) => obs.observe(x));
+
+			// ==== FORMULARIO DE CONTACTO ====
+			document
+				.getElementById("contactForm")
+				.addEventListener("submit", async (e) => {
+					e.preventDefault();
+					const data = new FormData(e.target);
+					const res = await fetch("{% url 'enviar_mensaje' %}", {
+						method: "POST",
+						body: data,
+					});
+					if (res.ok) {
+						Swal.fire({
+							icon: "success",
+							title: "¡Mensaje enviado!",
+							text: "Tu mensaje fue enviado correctamente.",
+							confirmButtonColor: "#3b82f6",
+						});
+						e.target.reset();
+					} else {
+						Swal.fire({
+							icon: "error",
+							title: "Error",
+							text: "No se pudo enviar el mensaje.",
+							confirmButtonColor: "#3b82f6",
+						});
+					}
+				});
+			// ==== PLACEHOLDERS BILINGÜES ====
+			function updatePlaceholders(l) {
+				document.querySelectorAll(".lang-placeholder").forEach((input) => {
+					input.placeholder = input.dataset[l];
+				});
+			}
+		</script>
+		<script>
+			// Detectar sección activa al hacer clic (versión frontend)
+			const links = document.querySelectorAll(".nav-link");
+			links.forEach((link) => {
+				link.addEventListener("click", () => {
+					links.forEach((l) => l.classList.remove("active"));
+					link.classList.add("active");
+				});
+			});
+			// 🔹 Gestión de idioma
+			const langSelect = document.getElementById("langSelect");
+			const storedLang = localStorage.getItem("lang") || "es";
+			langSelect.value = storedLang;
+			applyLang(storedLang); // ✅ Ahora se ejecuta cuando el footer ya existe
+
+			langSelect.addEventListener("change", (e) => {
+				const lang = e.target.value;
+				localStorage.setItem("lang", lang);
+				applyLang(lang);
+			});
+
+			// 🔹 Función que cambia idioma
+			function applyLang(lang) {
+				// Traducción general
+				document.querySelectorAll(".lang").forEach((el) => {
+					if (el.dataset[lang]) el.textContent = el.dataset[lang];
+				});
+
+				// Traducción específica del footer
+				const phrase = document.getElementById("footer-phrase");
+				if (phrase && phrase.dataset[lang]) {
+					phrase.textContent = phrase.dataset[lang];
+				}
+			}
+			const sections = document.querySelectorAll("section[id]");
+			const navLinks = document.querySelectorAll(".nav-link");
+
+			window.addEventListener("scroll", () => {
+				let scrollPos = window.scrollY + 150; // margen superior para detección
+
+				sections.forEach((section) => {
+					const top = section.offsetTop;
+					const height = section.offsetHeight;
+					const id = section.getAttribute("id");
+
+					if (scrollPos >= top && scrollPos < top + height) {
+						navLinks.forEach((link) => {
+							link.classList.remove("active");
+							if (link.getAttribute("href") === `#${id}`) {
+								link.classList.add("active");
+							}
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Gracias por contactarte - LRLEDEV</title>
+		<style>
+			body {
+				background: radial-gradient(circle at 30% 40%, #000820, #001a40 90%);
+				color: #e2e8f0;
+				font-family: "Poppins", sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+			.container {
+				max-width: 600px;
+				margin: 40px auto;
+				background: rgba(0, 0, 0, 0.75);
+				border-radius: 16px;
+				border: 1px solid rgba(59, 130, 246, 0.4);
+				box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+				overflow: hidden;
+				text-align: center;
+			}
+			.header {
+				background: linear-gradient(90deg, #001a40, #0a0035, #001a40);
+				color: #60a5fa;
+				padding: 25px;
+				font-size: 22px;
+				font-weight: 700;
+				letter-spacing: 1px;
+				text-transform: uppercase;
+			}
+			.logo {
+				width: 140px;
+				margin: 20px auto;
+			}
+			.content {
+				padding: 25px 35px;
+				line-height: 1.6;
+			}
+			.content p {
+				font-size: 16px;
+				color: #dbeafe;
+			}
+			.highlight {
+				color: #3b82f6;
+				font-weight: 600;
+			}
+			.footer {
+				background: #000820;
+				color: #94a3b8;
+				font-size: 13px;
+				padding: 15px;
+				border-top: 1px solid rgba(59, 130, 246, 0.3);
+			}
+			.footer a {
+				color: #60a5fa;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">⚙️ Gracias por contactarte</div>
+			<a class="navbar-brand fs-4" href="#hero">&lt;LRLEDEV&gt;</a>
+			<div class="content">
+				<p>Hola <span class="highlight">{{ nombre }}</span>,</p>
+				<p>
+					Gracias por ponerte en contacto con nosotros a través de nuestro
+					portafolio <span class="highlight">LRLEDEV</span>.
+				</p>
+				<p>
+					Tu mensaje ha sido recibido correctamente y será revisado en breve.
+					Pronto recibirás una respuesta personalizada sobre tu consulta o
+					colaboración.
+				</p>
+				<p style="margin-top: 20px">
+					🚀 Seguimos construyendo el futuro, línea a línea de código.
+				</p>
+				<p style="margin-top: 25px; font-weight: 600; color: #60a5fa">
+					—
+					<span style="font-family: 'Orbitron', sans-serif"
+						>&lt;LRLEDEV&gt;</span
+					>
+				</p>
+			</div>
+			<div class="footer">
+				© {{ now|default:"2025" }} Leonardo Rafael Luna Estrada |
+				<a href="https://lrledev.com">lrledev.com</a><br />
+				💬
+				<a href="mailto:leonardoluna@lrledev.com">leonardoluna@lrledev.com</a>
+			</div>
+		</div>
+	</body>
+</html>
