@@ -49,21 +49,60 @@
 						<span>QR Studio</span>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a
+						href="/calculadora/"
+						class="nav-link d-flex align-items-center gap-1 {% if request.path == '/calculadora/' %}active{% endif %}">
+						<i class="bi bi-calculator text-primary"></i>
+						<span>Calculadora</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a
+						href="/ruleta/"
+						class="nav-link d-flex align-items-center gap-1 {% if request.path == '/ruleta/' %}active{% endif %}">
+						<i class="bi bi-arrow-clockwise text-primary"></i>
+						<span>Ruleta</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a
+						href="/generador/"
+						class="nav-link d-flex align-items-center gap-1 {% if request.path == '/generador/' %}active{% endif %}">
+						<i class="bi bi-key text-primary"></i>
+						<span>Generador de Contraseñas</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a
+						href="/conversor/"
+						class="nav-link d-flex align-items-center gap-1 {% if request.path == '/conversor/' %}active{% endif %}">
+						<i class="bi bi-arrow-repeat text-primary"></i>
+						<span>Conversor</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</div>
 </nav>
-
 <script>
-	// Reloj dinámico
 	function clk() {
 		document.getElementById("clock").textContent =
 			new Date().toLocaleTimeString();
 	}
 	setInterval(clk, 1000);
 	clk();
+	// === Cerrar menú al hacer clic en un enlace (modo móvil) ===
+	document.querySelectorAll(".navbar .nav-link").forEach((link) => {
+		link.addEventListener("click", () => {
+			const navbarCollapse = document.querySelector(".navbar-collapse");
+			const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+			if (bsCollapse) {
+				bsCollapse.hide();
+			}
+		});
+	});
 </script>
-
 <style>
 	.navbar {
 		backdrop-filter: blur(10px);

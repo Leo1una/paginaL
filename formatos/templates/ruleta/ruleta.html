@@ -1,0 +1,246 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container text-center mt-5">
+	<h1 class="mb-4" style="color: #60a5fa">Ruleta</h1>
+
+	<form method="POST" id="ruletaForm" class="w-50 mx-auto mb-4">
+		{% csrf_token %}
+		<label for="plantilla">Seleccionar plantilla:</label>
+		<select name="plantilla" id="plantilla" class="form-select mb-3">
+			<option value="">Personalizada</option>
+			{% for nombre in plantillas.keys %}
+			<option value="{{ nombre }}">{{ nombre }}</option>
+			{% endfor %}
+		</select>
+
+		<label for="opciones">Opciones (una por línea):</label>
+		<textarea
+			name="opciones"
+			id="opciones"
+			rows="5"
+			class="form-control mb-3"
+			placeholder="Ejemplo: Manzana&#10;Pera&#10;Uva&#10;Sandía"></textarea>
+
+		<button type="submit" class="btn btn-primary w-100">Girar Ruleta</button>
+	</form>
+	<div
+		class="position-relative mx-auto mt-4"
+		style="width: 300px; height: 300px">
+		<canvas id="canvasRuleta" width="300" height="300"></canvas>
+		<div
+			id="flecha"
+			style="
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 0;
+				height: 0;
+				border-left: 10px solid transparent;
+				border-right: 10px solid transparent;
+				border-bottom: 20px solid #60a5fa;
+			"></div>
+	</div>
+
+	<audio
+		id="sonidoGiro"
+		src="https://assets.mixkit.co/active_storage/sfx/2350/2350-preview.mp3"></audio>
+	<div id="historial" class="mt-5">
+		<h4 style="color: #60a5fa">Historial de Resultados</h4>
+		<ul
+			class="mx-auto shadow-lg border border-primary bg-black bg-opacity-25"
+			style="max-width: 400px"
+			id="listaHistorial"></ul>
+	</div>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const opcionesTextarea = document.getElementById("opciones");
+		const plantillaSelect = document.getElementById("plantilla");
+		const listaHistorial = document.getElementById("listaHistorial");
+		const canvas = document.getElementById("canvasRuleta");
+		const ctx = canvas.getContext("2d");
+		const center = canvas.width / 2;
+		const radius = canvas.width / 2;
+		const sonido = document.getElementById("sonidoGiro");
+
+		let opciones = [];
+		let historial = [];
+
+		// Plantillas disponibles
+		const plantillas = {
+			"Sí o No": ["Sí", "No"],
+			Colores: ["Rojo", "Azul", "Verde", "Amarillo", "Negro", "Blanco"],
+			"Números del 1 al 10": Array.from({ length: 10 }, (_, i) =>
+				(i + 1).toString()
+			),
+			Emociones: [
+				"Feliz",
+				"Triste",
+				"Enojado",
+				"Motivado",
+				"Cansado",
+				"Ansioso",
+			],
+			"Nombres de ejemplo": [
+				"Leonardo",
+				"Nidia",
+				"Jonathan",
+				"Esli",
+				"William",
+			],
+		};
+
+		// Cambiar plantilla
+		plantillaSelect.addEventListener("change", () => {
+			const nombre = plantillaSelect.value;
+			opciones = nombre && plantillas[nombre] ? [...plantillas[nombre]] : [];
+			opcionesTextarea.value = opciones.join("\n");
+			renderRuleta();
+		});
+
+		// Editar opciones manualmente
+		opcionesTextarea.addEventListener("input", () => {
+			opciones = opcionesTextarea.value
+				.split("\n")
+				.map((x) => x.trim())
+				.filter((x) => x);
+			renderRuleta();
+		});
+
+		// 🎯 Dibujar ruleta
+		function renderRuleta() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			if (opciones.length === 0) return;
+
+			const angleStep = (2 * Math.PI) / opciones.length;
+			const colors = [
+				"#3b82f6",
+				"#60a5fa",
+				"#9333ea",
+				"#14b8a6",
+				"#f59e0b",
+				"#ef4444",
+				"#84cc16",
+				"#06b6d4",
+				"#e879f9",
+				"#8b5cf6",
+			];
+
+			opciones.forEach((opcion, i) => {
+				const startAngle = i * angleStep;
+				const endAngle = startAngle + angleStep;
+				ctx.beginPath();
+				ctx.moveTo(center, center);
+				ctx.arc(center, center, radius, startAngle, endAngle);
+				ctx.fillStyle = colors[i % colors.length];
+				ctx.fill();
+				ctx.save();
+				ctx.translate(center, center);
+				ctx.rotate(startAngle + angleStep / 2);
+				ctx.textAlign = "right";
+				ctx.fillStyle = "#fff";
+				ctx.font = "bold 14px Poppins";
+				ctx.fillText(opcion, radius - 10, 5);
+				ctx.restore();
+			});
+		}
+		renderRuleta();
+
+		// 🚀 Girar ruleta
+		document.getElementById("ruletaForm").addEventListener("submit", (e) => {
+			e.preventDefault();
+			if (opciones.length === 0) return alert("Agrega opciones primero.");
+
+			const duracion = 5000;
+			const giros = 8;
+			const indexResultado = Math.floor(Math.random() * opciones.length);
+			const resultado = opciones[indexResultado];
+			const angleStep = (2 * Math.PI) / opciones.length;
+			const finalAngle =
+				giros * 2 * Math.PI +
+				(Math.PI * 3) / 2 -
+				indexResultado * angleStep -
+				angleStep / 2;
+
+			sonido.play();
+			let start = null;
+
+			function animar(timestamp) {
+				if (!start) start = timestamp;
+				const elapsed = timestamp - start;
+				const progreso = Math.min(elapsed / duracion, 1);
+				const easing = 1 - Math.pow(1 - progreso, 3);
+				const currentAngle = easing * finalAngle;
+
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				const angleStep = (2 * Math.PI) / opciones.length;
+				const colors = [
+					"#3b82f6",
+					"#60a5fa",
+					"#9333ea",
+					"#14b8a6",
+					"#f59e0b",
+					"#ef4444",
+					"#84cc16",
+					"#06b6d4",
+					"#e879f9",
+					"#8b5cf6",
+				];
+
+				opciones.forEach((opcion, i) => {
+					const startAngle = i * angleStep + currentAngle;
+					const endAngle = startAngle + angleStep;
+					ctx.beginPath();
+					ctx.moveTo(center, center);
+					ctx.arc(center, center, radius, startAngle, endAngle);
+					ctx.fillStyle = colors[i % colors.length];
+					ctx.fill();
+					ctx.save();
+					ctx.translate(center, center);
+					ctx.rotate(startAngle + angleStep / 2);
+					ctx.textAlign = "right";
+					ctx.fillStyle = "#fff";
+					ctx.font = "bold 14px Poppins";
+					ctx.fillText(opcion, radius - 10, 5);
+					ctx.restore();
+				});
+
+				if (progreso < 1) requestAnimationFrame(animar);
+				else {
+					sonido.pause();
+					sonido.currentTime = 0;
+					Swal.fire({
+						title: "🎉 Resultado",
+						text: resultado,
+						icon: "success",
+						confirmButtonColor: "#3b82f6",
+					});
+					agregarHistorial(resultado);
+				}
+			}
+
+			requestAnimationFrame(animar);
+		});
+
+		// 🧾 Historial + excluir resultados
+		function agregarHistorial(resultado) {
+			historial.push(resultado);
+			const li = document.createElement("li");
+			li.className =
+				"list-group-item d-flex justify-content-between align-items-center";
+			li.innerHTML = `${resultado} <input type="checkbox" class="form-check-input shadow-lg border border-primary bg-black bg-opacity-25" title="Excluir este resultado">`;
+			listaHistorial.appendChild(li);
+
+			li.querySelector("input").addEventListener("change", (e) => {
+				if (e.target.checked) {
+					opciones = opciones.filter((o) => o !== resultado);
+					opcionesTextarea.value = opciones.join("\n");
+					li.style.textDecoration = "line-through";
+					renderRuleta();
+				}
+			});
+		}
+	});
+</script>
+{% endblock %}

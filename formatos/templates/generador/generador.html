@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% block title %}Generador de Contraseñas{% endblock%}
+{% block content %}
+<div class="container text-center mt-5">
+	<h1 class="display-5 fw-bold mb-4 text-glow" style="color: #60a5fa">
+		Generador de Contraseñas
+	</h1>
+
+	<form
+		id="form-generador"
+		method="POST"
+		class="w-50 mx-auto bg-black bg-opacity-25 p-4 rounded-4 border border-warning shadow-lg">
+		{% csrf_token %}
+		<div class="mb-3">
+			<label for="longitud" class="form-label text-light">Longitud:</label>
+			<input
+				type="number"
+				name="longitud"
+				id="longitud"
+				value="12"
+				min="4"
+				max="64"
+				class="form-control text-center" />
+		</div>
+
+		<div class="form-check text-start text-light">
+			<input
+				type="checkbox"
+				name="mayus"
+				id="mayus"
+				class="form-check-input"
+				checked />
+			<label for="mayus" class="form-check-label">Incluir mayúsculas</label>
+		</div>
+
+		<div class="form-check text-start text-light">
+			<input
+				type="checkbox"
+				name="nums"
+				id="nums"
+				class="form-check-input"
+				checked />
+			<label for="nums" class="form-check-label">Incluir números</label>
+		</div>
+
+		<div class="form-check text-start text-light mb-3">
+			<input
+				type="checkbox"
+				name="simbolos"
+				id="simbolos"
+				class="form-check-input" />
+			<label for="simbolos" class="form-check-label">Incluir símbolos</label>
+		</div>
+
+		<button type="submit" class="btn btn-outline-warning fw-bold w-100 mb-3">
+			Generar Contraseña
+		</button>
+	</form>
+
+	<!-- Aquí se mostrará la contraseña generada -->
+	<div id="resultado"></div>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const form = document.getElementById("form-generador");
+		const resultado = document.getElementById("resultado");
+
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault(); // evita recarga
+
+			const formData = new FormData(form);
+
+			const response = await fetch("", {
+				method: "POST",
+				headers: {
+					"X-Requested-With": "XMLHttpRequest",
+				},
+				body: formData,
+			});
+
+			const data = await response.json();
+
+			if (data.password) {
+				resultado.innerHTML = `
+					<div class="alert alert-success list-group-item">
+						<strong id="passwordText">${data.password}</strong>
+						<button type="button" id="copiarBtn" class="btn btn-sm btn-dark ms-2">Copiar</button>
+					</div>
+				`;
+
+				document.getElementById("copiarBtn").addEventListener("click", () => {
+					navigator.clipboard.writeText(data.password);
+					Swal.fire({
+						title: "Copiada",
+						text: "Contraseña copiada al portapapeles",
+						icon: "success",
+						confirmButtonColor: "#ffc107",
+					});
+				});
+			}
+		});
+	});
+</script>
+{% endblock %}

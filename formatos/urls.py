@@ -17,4 +17,8 @@ urlpatterns = [
     path("qrgenerador/", views.qr, name="qr"),
     path('generar_qr/', views.generar_qr, name='generar_qr'),
     path('maestros/', views.maestros, name='maestros'),
+    path('calculadora/', views.calculadora, name='calculadora'),
+    path("ruleta/", views.ruleta, name="ruleta"),
+    path("generador/", views.generador, name="generador"),
+    path("conversor/", views.conversor, name="conversor"),
 ]

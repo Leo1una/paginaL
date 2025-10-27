@@ -8,7 +8,6 @@
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 			rel="stylesheet" />
-		<!-- Bootstrap Icons -->
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -17,282 +16,7 @@
 			href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap"
 			rel="stylesheet" />
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<style>
-			:root {
-				--accent: #3b82f6;
-				--text: #e2e8f0;
-			}
-			body {
-				background: linear-gradient(270deg, #000820, #0a0035, #001a40, #000820);
-				background-size: 600% 600%;
-				animation: aurora 30s ease infinite;
-				color: var(--text);
-				font-family: "Poppins", sans-serif;
-				overflow-x: hidden;
-				scroll-behavior: smooth;
-				margin: 0;
-			}
-			@keyframes aurora {
-				0% {
-					background-position: 0% 50%;
-				}
-				50% {
-					background-position: 100% 50%;
-				}
-				100% {
-					background-position: 0% 50%;
-				}
-			}
-			canvas#particles,
-			canvas#halo {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				z-index: -1;
-			}
-			.text-3d {
-				font-family: "Orbitron", sans-serif;
-				font-weight: 800;
-				color: transparent;
-				background: linear-gradient(
-					90deg,
-					var(--accent),
-					#60a5fa,
-					#93c5fd,
-					var(--accent)
-				);
-				-webkit-background-clip: text;
-				background-size: 400% 400%;
-				animation: textshift 8s infinite linear;
-				text-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
-			}
-			@keyframes textshift {
-				0% {
-					background-position: 0% 50%;
-				}
-				50% {
-					background-position: 100% 50%;
-				}
-				100% {
-					background-position: 0% 50%;
-				}
-			}
-			h2.section-title {
-				font-family: "Orbitron", sans-serif;
-				font-weight: 700;
-				color: var(--accent);
-				display: inline-block;
-				position: relative;
-			}
-			h2.section-title::after {
-				content: "";
-				position: absolute;
-				left: 0;
-				bottom: -6px;
-				width: 100%;
-				height: 3px;
-				background: linear-gradient(
-					90deg,
-					transparent,
-					var(--accent),
-					transparent
-				);
-				animation: underline 2s infinite linear;
-			}
-			@keyframes underline {
-				0% {
-					background-position: -200px;
-				}
-				100% {
-					background-position: 200px;
-				}
-			}
-			.navbar {
-				backdrop-filter: blur(10px);
-				background: rgba(0, 0, 0, 0.5) !important;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			}
-			.navbar-brand {
-				font-family: "Orbitron", sans-serif;
-				font-weight: 800;
-				color: var(--accent) !important;
-				animation: glow 2s infinite alternate;
-			}
-			@keyframes glow {
-				0% {
-					text-shadow: 0 0 10px var(--accent);
-				}
-				100% {
-					text-shadow: 0 0 25px #93c5fd;
-				}
-			}
-			.nav-link:hover {
-				color: var(--accent) !important;
-			}
-			.photo-frame {
-				width: 230px;
-				height: 230px;
-				border-radius: 50%;
-				border: 2px solid var(--accent);
-				box-shadow: 0 0 30px var(--accent);
-				overflow: hidden;
-				perspective: 1000px;
-				transition: transform 0.5s, box-shadow 0.5s;
-			}
-			.photo-frame:hover {
-				transform: rotateY(10deg) rotateX(8deg) scale(1.05);
-				box-shadow: 0 0 60px var(--accent);
-			}
-			.photo-frame img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				filter: brightness(1.15) saturate(1.25);
-			}
-			section {
-				opacity: 0;
-				transform: translateY(40px);
-				transition: all 1s ease;
-			}
-			section.visible {
-				opacity: 1;
-				transform: translateY(0);
-			}
-			footer {
-				text-align: center;
-				padding: 40px 20px;
-				background: rgba(0, 0, 0, 0.5);
-				border-top: 1px solid rgba(255, 255, 255, 0.1);
-			}
-			footer a {
-				color: var(--accent);
-				text-decoration: none;
-			}
-			::-webkit-scrollbar {
-				width: 8px;
-			}
-			::-webkit-scrollbar-track {
-				background: rgba(0, 0, 0, 0.2);
-			}
-			::-webkit-scrollbar-thumb {
-				background: linear-gradient(180deg, #3b82f6, #60a5fa);
-				border-radius: 10px;
-				box-shadow: 0 0 10px #3b82f6;
-			}
-			::-webkit-scrollbar-thumb:hover {
-				background: linear-gradient(180deg, #60a5fa, #679bd6ff);
-			}
-			.widget {
-				color: var(--accent);
-				font-weight: bold;
-				font-family: monospace;
-				text-align: center;
-				margin-bottom: 6px;
-			}
-			/* ==== Placeholders visibles y futuristas ==== */
-			::placeholder {
-				color: rgba(100, 180, 255, 0.6) !important;
-				text-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
-				font-style: italic;
-			}
-
-			.form-control:focus::placeholder {
-				color: rgba(150, 200, 255, 0.8) !important;
-				text-shadow: 0 0 10px rgba(100, 180, 255, 0.6);
-			}
-
-			/* Bordes y efectos al interactuar */
-			.form-control {
-				border: 1px solid rgba(59, 130, 246, 0.4);
-				transition: all 0.3s ease;
-			}
-
-			.form-control:focus {
-				box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
-				border-color: rgba(100, 180, 255, 0.8);
-			}
-			.nav-link i {
-				transition: all 0.3s ease;
-				text-shadow: 0 0 0 transparent;
-			}
-
-			.nav-link:hover i {
-				text-shadow: 0 0 10px var(--accent);
-				transform: scale(1.2);
-			}
-			.navbar {
-				backdrop-filter: blur(10px);
-				background: rgba(0, 0, 0, 0.5) !important;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			}
-
-			.navbar-brand {
-				font-family: "Orbitron", sans-serif;
-				font-weight: 800;
-				color: var(--accent, #3b82f6) !important;
-				animation: glow 2s infinite alternate;
-			}
-
-			@keyframes glow {
-				0% {
-					text-shadow: 0 0 10px var(--accent, #3b82f6);
-				}
-				100% {
-					text-shadow: 0 0 25px #93c5fd;
-				}
-			}
-
-			.nav-link {
-				color: #e2e8f0 !important;
-				transition: all 0.3s ease;
-				border-radius: 8px;
-				padding: 6px 12px;
-			}
-
-			.nav-link:hover {
-				color: #3b82f6 !important;
-				transform: translateY(-2px);
-				background: rgba(59, 130, 246, 0.1);
-				box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
-			}
-
-			.nav-link.active {
-				color: #3b82f6 !important;
-				background: rgba(59, 130, 246, 0.15);
-				box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
-				font-weight: 600;
-			}
-
-			.nav-link i {
-				transition: all 0.3s ease;
-				color: #3b82f6 !important;
-			}
-
-			.nav-link.active i,
-			.nav-link:hover i {
-				text-shadow: 0 0 10px #3b82f6;
-				transform: scale(1.2);
-			}
-
-			.widget {
-				color: #3b82f6;
-				font-weight: bold;
-				font-family: monospace;
-				text-align: center;
-			}
-
-			/* Selector de idioma */
-			#langSelect {
-				cursor: pointer;
-				transition: all 0.3s ease;
-			}
-
-			#langSelect:hover {
-				box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
-			}
-		</style>
+		<link rel="stylesheet" href="{% static 'css/welcome.css' %}" />
 	</head>
 	<body>
 		<canvas id="particles"></canvas>
@@ -300,18 +24,13 @@
 		<nav
 			class="navbar navbar-expand-lg fixed-top navbar-dark shadow-lg bg-black bg-opacity-25">
 			<div class="container-fluid px-4">
-				<!-- Marca -->
 				<a
 					class="navbar-brand fs-4 d-flex align-items-center gap-2"
 					href="#hero">
 					<i class="bi bi-cpu-fill text-primary fs-4"></i>
 					&lt;LRLEDEV&gt;
 				</a>
-
-				<!-- Reloj -->
 				<div class="widget" id="clock"></div>
-
-				<!-- Botón responsive -->
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -319,7 +38,6 @@
 					data-bs-target="#nav">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-
 				<div class="collapse navbar-collapse justify-content-end" id="nav">
 					<ul class="navbar-nav mb-2 mb-lg-0">
 						<li class="nav-item">
@@ -386,8 +104,6 @@
 							</a>
 						</li>
 					</ul>
-
-					<!-- Selector de idioma -->
 					<div class="ms-3 d-flex align-items-center gap-2">
 						<i class="bi bi-translate text-primary fs-5"></i>
 						<select
@@ -473,28 +189,118 @@
 			<div class="row justify-content-center g-4">
 				<div class="col-md-8">
 					<div
-						class="p-4 skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
+						class="p-4 skill-card rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
 						<ul class="list-unstyled mb-0 text-light small text-center">
-							<li>📡 CCNAV7: Introduction to Networks</li>
-							<li>🐧 NDG: Linux Essentials</li>
-							<li>💾 NDG: Linux Unhatched</li>
-							<li>🧭 Introduction to Packet Tracer</li>
-							<li>
-								🧠 Curso de Inmersión en IA – Alura con Google Gemini | Agosto
-								2025
+							<li class="mb-2">
+								📡
+								<a
+									href="https://drive.google.com/file/d/18WpTsiIOXOFiRykQk9OCXjU5zsOmoBvj/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									CCNAV7: Introduction to Networks
+								</a>
 							</li>
-							<li>🤖 Certificación en Chatbots – Doppler Academy | 2025</li>
-							<li>🌐 CCNA: Redes Empresariales, Seguridad y Automatización</li>
-							<li>🛡️ Fundamentos de Ciberseguridad</li>
-							<li>🎨 CSS Essentials</li>
-							<li>
-								🧩 Gemini y Python: Orquestando LLMs con LangChain – Alura
+							<li class="mb-2">
+								🐧
+								<a
+									href="https://drive.google.com/file/d/18shfwXfG36F6DV_fir6zXShvoyt-byNW/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									NDG: Linux Essentials
+								</a>
 							</li>
-							<li>
-								⚙️ TypeScript en la Práctica: Proyecto Completo con Módulos –
-								Alura
+							<li class="mb-2">
+								💾
+								<a
+									href="https://drive.google.com/file/d/18OFJnyyMOQoFX-Z0C0MAXjVeI5BCAY9K/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									NDG: Linux Unhatched
+								</a>
 							</li>
-							<li>🚀 Desarrollo con IA – Big School</li>
+							<li class="mb-2">
+								🧭
+								<a
+									href="https://drive.google.com/file/d/18i0lFvZR_14kMK4RAZAJj2muoZIoQCtU/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									Introduction to Packet Tracer
+								</a>
+							</li>
+							<li class="mb-2">
+								🧠
+								<a
+									href="https://drive.google.com/file/d/18OWVxfT155ChYd6L3OD4WFj3P6g4fKbn/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									Curso de Inmersión en IA – Alura con Google Gemini | Agosto
+									2025
+								</a>
+							</li>
+							<li class="mb-2">
+								🤖
+								<a
+									href="https://drive.google.com/file/d/1Rr9_kj_MDWcXlZ0VcCBdgKy6mXVI_vf8/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									Certificación en Chatbots – Doppler Academy | 2025
+								</a>
+							</li>
+							<li class="mb-2">
+								🌐
+								<a
+									href="https://drive.google.com/file/d/18WUvl7D7t8Lf41zvGfM-DzKLuSMhT-c6/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									CCNA: Redes Empresariales, Seguridad y Automatización
+								</a>
+							</li>
+							<li class="mb-2">
+								🛡️
+								<a
+									href="https://drive.google.com/file/d/18S8FTbWOsriWTIZz0bcQsw-sBZ9eUZPY/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									Fundamentos de Ciberseguridad
+								</a>
+							</li>
+							<li class="mb-2">
+								🎨
+								<a
+									href="https://drive.google.com/file/d/18QFCGkDm1WavQBPR-bCLRjJjwq4XiDfc/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									CSS Essentials
+								</a>
+							</li>
+							<li class="mb-2">
+								🧩
+								<a
+									href="https://drive.google.com/file/d/1nYxy3GYOFqPJldG6ZYcLm60CGkjjoocK/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									Gemini y Python: Orquestando LLMs con LangChain – Alura
+								</a>
+							</li>
+							<li class="mb-2">
+								⚙️
+								<a
+									href="https://drive.google.com/file/d/1p-XpDwuh4KMPuhBQ_imdy36C1vCU8oD4/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									TypeScript en la Práctica: Proyecto Completo con Módulos –
+									Alura
+								</a>
+							</li>
+							<li class="mb-2">
+								🚀
+								<a
+									href="https://drive.google.com/file/d/1VJ1wzIHzQ4F7O2OphENu7ytnCKWsd1RI/view?usp=sharing"
+									target="_blank"
+									class="text-info text-decoration-none fw-bold">
+									Desarrollo con IA – Big School
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -508,149 +314,201 @@
 			</p>
 		</section>
 
-		<section id="habilidades" class="py-5 text-center bg">
+		<section id="habilidades" class="container py-5 text-center">
 			<h2
-				class="section-title mb-4 lang"
+				class="section-title mb-5 lang"
 				data-es="Habilidades Técnicas"
 				data-en="Technical Skills">
 				Habilidades Técnicas
 			</h2>
 
 			<div class="row g-4 justify-content-center">
-				<div class="col-md-4">
+				<!-- Lenguajes -->
+				<div class="col-lg-4 col-md-6">
 					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5
-							class="lang mb-3 text-info"
-							data-es="Lenguajes"
-							data-en="Languages">
-							Lenguajes
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="Python, PHP, Java, JavaScript, TypeScript, HTML, CSS"
-							data-en="Python, PHP, Java, JavaScript, TypeScript, HTML, CSS">
-							⚙️ Python, PHP, Java, JavaScript, TypeScript, HTML, CSS
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="Lenguajes"
+								data-en="Languages">
+								Lenguajes
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Python, PHP, Java, JavaScript, TypeScript, HTML, CSS"
+								data-en="Python, PHP, Java, JavaScript, TypeScript, HTML, CSS">
+								⚙️ Python, PHP, Java, JavaScript, TypeScript, HTML, CSS
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Nivel: Avanzado
 						</p>
 					</div>
 				</div>
 
-				<div class="col-md-4">
+				<!-- Frameworks -->
+				<div class="col-lg-4 col-md-6">
 					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5
-							class="lang mb-3 text-info"
-							data-es="Frameworks"
-							data-en="Frameworks">
-							Frameworks
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="Django, Laravel, React, Bootstrap, Tailwind"
-							data-en="Django, Laravel, React, Bootstrap, Tailwind">
-							🧩 Django, Laravel, React, Bootstrap, Tailwind
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="Frameworks"
+								data-en="Frameworks">
+								Frameworks
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Django, Laravel, React, Bootstrap, Tailwind"
+								data-en="Django, Laravel, React, Bootstrap, Tailwind">
+								🧩 Django, Laravel, React, Bootstrap, Tailwind
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Backend & Frontend
 						</p>
 					</div>
 				</div>
 
-				<div class="col-md-4">
+				<!-- Bases de Datos -->
+				<div class="col-lg-4 col-md-6">
 					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5
-							class="lang mb-3 text-info"
-							data-es="Bases de Datos"
-							data-en="Databases">
-							Bases de Datos
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="MySQL, NoSQL, PostgreSQL, MongoDB"
-							data-en="MySQL, NoSQL, PostgreSQL, MongoDB">
-							🗄️ MySQL, NoSQL, PostgreSQL, MongoDB
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="Bases de Datos"
+								data-en="Databases">
+								Bases de Datos
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="MySQL, NoSQL, PostgreSQL, MongoDB"
+								data-en="MySQL, NoSQL, PostgreSQL, MongoDB">
+								🗄️ MySQL, NoSQL, PostgreSQL, MongoDB
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">SQL & NoSQL</p>
+					</div>
+				</div>
+
+				<!-- Data & AI -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="Data & IA"
+								data-en="Data & AI">
+								Data & IA
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Análisis de datos, Inteligencia Artificial, Machine Learning, LangChain, Gemini"
+								data-en="Data Analysis, Artificial Intelligence, Machine Learning, LangChain, Gemini">
+								🧠 Análisis de datos, IA, Machine Learning, LangChain, Gemini
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Enfocado en IA Aplicada
 						</p>
 					</div>
 				</div>
 
-				<div class="col-md-4">
+				<!-- DevOps -->
+				<div class="col-lg-4 col-md-6">
 					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5
-							class="lang mb-3 text-info"
-							data-es="Data & AI"
-							data-en="Data & AI">
-							Data & AI
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="Análisis de datos, Inteligencia Artificial, Procesamiento de Información, Machine Learning, LangChain, Gemini"
-							data-en="Data Analysis, Artificial Intelligence, Information Processing, Machine Learning, LangChain, Gemini">
-							🧠 Análisis de datos, IA, Machine Learning, LangChain, Gemini
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="DevOps"
+								data-en="DevOps">
+								DevOps
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Apache, Debian, Nginx, Samba, Docker, VPS Configuration"
+								data-en="Apache, Debian, Nginx, Samba, Docker, VPS Configuration">
+								☁️ Apache, Debian, Nginx, Docker, VPS, Samba
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Infraestructura & Despliegue
 						</p>
 					</div>
 				</div>
 
-				<div class="col-md-4">
+				<!-- Automatización & APIs -->
+				<div class="col-lg-4 col-md-6">
 					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5 class="lang mb-3 text-info" data-es="DevOps" data-en="DevOps">
-							DevOps
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="Apache, Debian, Nginx, Samba, XAMPP, Docker, VPS Configuration"
-							data-en="Apache, Debian, Nginx, Samba, XAMPP, Docker, VPS Configuration">
-							☁️ Apache, Debian, Nginx, Docker, VPS, Samba, XAMPP
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="Automatización & APIs"
+								data-en="Automation & APIs">
+								Automatización & APIs
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Automatización de procesos, APIs REST, Webhooks, Integración con IA, Scraping"
+								data-en="Process Automation, REST APIs, Webhooks, AI Integration, Scraping">
+								⚡ Automatización de procesos, APIs REST, IA Integrada
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Integraciones Inteligentes
 						</p>
 					</div>
 				</div>
 
-				<div class="col-md-4">
+				<!-- Ciberseguridad -->
+				<div class="col-lg-4 col-md-6">
 					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5
-							class="lang mb-3 text-info"
-							data-es="Automatización & APIs"
-							data-en="Automation & APIs">
-							Automatización & APIs
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="Automatización de procesos, APIs REST, Webhooks, Integración con IA, Scraping, Flask Microservices"
-							data-en="Process Automation, REST APIs, Webhooks, AI Integration, Scraping, Flask Microservices">
-							⚡ Automatización de procesos, APIs REST, Webhooks, IA Integrada
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="Ciberseguridad & Control"
+								data-en="Cybersecurity & Control">
+								Ciberseguridad & Control
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Gestión de acceso, cifrado, control de sesiones, auditoría y monitoreo de red"
+								data-en="Access management, encryption, session control, auditing and network monitoring">
+								🔐 Seguridad, cifrado, monitoreo, auditorías
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Seguridad y Monitoreo
 						</p>
 					</div>
 				</div>
 
-				<div class="col-md-4">
+				<!-- Otros -->
+				<div class="col-lg-4 col-md-6">
 					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5
-							class="lang mb-3 text-info"
-							data-es="Ciberseguridad & Control"
-							data-en="Cybersecurity & Control">
-							Ciberseguridad & Control
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="Gestión de acceso, cifrado, control de sesiones, auditoría y monitoreo de red"
-							data-en="Access management, encryption, session control, auditing and network monitoring">
-							🔐 Seguridad, cifrado, monitoreo, auditorías
-						</p>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div
-						class="skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25">
-						<h5 class="lang mb-3 text-info" data-es="Otros" data-en="Others">
-							Otros
-						</h5>
-						<p
-							class="lang text-light small"
-							data-es="Git, GitHub, VS Code, APIs externas, gestión de proyectos, metodologías ágiles"
-							data-en="Git, GitHub, VS Code, External APIs, Project Management, Agile Methodologies">
-							🧰 Git, GitHub, VS Code, APIs externas, metodologías ágiles
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3
+								class="text-warning fs-5 fw-bold mb-2 lang"
+								data-es="Otros"
+								data-en="Others">
+								Otros
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Git, GitHub, VS Code, APIs externas, metodologías ágiles"
+								data-en="Git, GitHub, VS Code, External APIs, Agile methodologies">
+								🧰 Git, GitHub, VS Code, APIs externas, metodologías ágiles
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							Herramientas de Desarrollo
 						</p>
 					</div>
 				</div>
@@ -701,18 +559,38 @@
 							</h3>
 							<p
 								class="lang small text-light mb-3"
-								data-es="Publicación del artículo 'MUVA: Asistente Virtual Basado en Inteligencia Artificial para el Monitoreo y Recomendación Personalizada de Salud' en el libro Avances Científicos y Tecnológicos en México 2025."
-								data-en="Publication of the article 'MUVA: AI-Based Virtual Assistant for Personalized Health Monitoring and Recommendations' in the book Scientific and Technological Advances in Mexico 2025.">
-								Publicación del artículo científico sobre MUVA en Avances
-								Científicos y Tecnológicos en México 2025.
+								data-es="Publicación del artículo 'MUVA: Asistente Virtual Basado en Inteligencia Artificial para el Monitoreo y Recomendación Personalizada de Salud' en el libro Avances Científicos y Tecnológicos en México II (Tomo VI, página 654)."
+								data-en="Publication of the article 'MUVA: AI-Based Virtual Assistant for Personalized Health Monitoring and Recommendations' in the book Scientific and Technological Advances in Mexico II (Volume VI, page 654).">
+								Publicación del artículo científico
+								<strong
+									>“MUVA: Asistente Virtual Basado en Inteligencia Artificial
+									para el Monitoreo y Recomendación Personalizada de
+									Salud”</strong
+								>
+								en el libro
+								<em>Avances Científicos y Tecnológicos en México II</em>.
+								<br />
+								Se encuentra en el <strong>Tomo VI</strong>, en la
+								<strong>página 654</strong> del PDF.
 							</p>
-							<p class="text-info small mb-1">
+
+							<p class="text-info small mb-2">
 								Investigación | IA, Ciencia de Datos, Django, Gemini
 							</p>
+
+							<p class="text-secondary small fst-italic mt-auto">
+								Marzo 2025 | Ed. Tecnológica Nacional
+							</p>
 						</div>
-						<p class="text-secondary small fst-italic mt-auto">
-							Marzo 2025 | Ed. Tecnológica Nacional
-						</p>
+
+						<a
+							href="https://www.cio.mx/archivos/avances_científicos_tecnologicos_25/tomo_6.pdf"
+							target="_blank"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto lang"
+							data-es="Ver Publicación"
+							data-en="View Publication"
+							>Ver Publicación</a
+						>
 					</div>
 				</div>
 
@@ -908,7 +786,9 @@
 						</p>
 						<a
 							href="/maestros"
-							class="btn btn-outline-primary btn-sm fw-bold mt-auto"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto lang"
+							data-es="Ver Proyecto"
+							data-en="View Project"
 							>Ver Proyecto</a
 						>
 					</div>
@@ -937,8 +817,135 @@
 						</p>
 						<a
 							href="/qrgenerador/"
-							class="btn btn-outline-primary btn-sm fw-bold mt-auto"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto lang"
+							data-es="Probar Generador QR"
+							data-en="Try QR Generator"
 							>Probar Generador QR</a
+						>
+					</div>
+				</div>
+				<!-- Calculadora IP Profesional -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">Calculadora IP</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Calcula redes, subredes, hosts, clases IP y rangos. Incluye subneteo avanzado, exportación a CSV o Excel y visualización interactiva de hosts."
+								data-en="Calculate networks, subnets, hosts, IP classes, and ranges. Includes advanced subnetting, CSV/Excel export, and interactive host visualization.">
+								Analiza redes IPv4 con precisión: subneteo automático, rango de
+								hosts, broadcast, clase y tipo de IP. Exporta resultados en CSV
+								o Excel y visualiza gráficamente la distribución de subredes.
+							</p>
+							<p class="text-info small mb-3">
+								Python (Django), ipaddress, OpenPyXL, Chart.js, Bootstrap 5
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+						<a
+							href="/calculadora/"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto lang"
+							data-es="Probar Calculadora IP"
+							data-en="Try IP Calculator"
+							>Probar Calculadora IP</a
+						>
+					</div>
+				</div>
+				<!--  Ruleta  LRLEDEV -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">Ruleta LRLEDEV</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Ruleta personalizable con plantillas automáticas, eliminación de resultados repetidos y animaciones fluidas. Ideal para sorteos, dinámicas o decisiones rápidas."
+								data-en="Customizable roulette with automatic templates, non-repeating results, and smooth animations. Ideal for raffles, classroom games, or quick decision-making.">
+								Selecciona una plantilla o crea tus propias opciones. Gira la
+								ruleta y obtén un resultado aleatorio con animación, sonido y
+								control de exclusión para evitar repeticiones.
+							</p>
+							<p class="text-info small mb-3">
+								Python (Django), JavaScript Canvas, SweetAlert2, Bootstrap 5
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+						<a
+							href="/ruleta/"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto lang"
+							data-es="Probar Ruleta"
+							data-en="Try Roulette"
+							>Probar Ruleta</a
+						>
+					</div>
+				</div>
+				<!-- Generador de Contraseñas Seguras -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								Generador de Contraseñas
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Genera contraseñas seguras con criterios personalizables: longitud, uso de símbolos, números y mayúsculas. Incluye opción de copiar al portapapeles."
+								data-en="Generate secure passwords with customizable criteria: length, symbols, numbers, and uppercase. Includes copy-to-clipboard feature.">
+								Protege tus cuentas con contraseñas seguras y únicas. Ajusta la
+								longitud, el tipo de caracteres y copia fácilmente al
+								portapapeles con un solo clic.
+							</p>
+							<p class="text-info small mb-3">
+								Python (Django), JavaScript, Bootstrap 5, SweetAlert2
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+						<a
+							href="/generador/"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto lang"
+							data-es="Probar Generador"
+							data-en="Try Generator"
+							>Probar Generador</a
+						>
+					</div>
+				</div>
+
+				<!-- Conversor de Unidades para Ingeniería -->
+				<div class="col-lg-4 col-md-6">
+					<div
+						class="project-card h-100 p-4 rounded-4 border border-primary shadow-lg bg-black bg-opacity-25 d-flex flex-column justify-content-between">
+						<div>
+							<h3 class="text-warning fs-4 fw-bold mb-2">
+								Conversor de Unidades
+							</h3>
+							<p
+								class="lang small text-light mb-3"
+								data-es="Convierte unidades de longitud, temperatura, almacenamiento, velocidad, bits/bytes y más con una interfaz simple y rápida."
+								data-en="Convert units of length, temperature, storage, speed, bits/bytes, and more with a clean and fast interface.">
+								Herramienta práctica para ingeniería: convierte múltiples
+								unidades (en tiempo real) con soporte dinámico para nuevas
+								categorías y precisión decimal configurable.
+							</p>
+							<p class="text-info small mb-3">
+								Python (Django), JavaScript, Bootstrap 5, Chart.js
+							</p>
+						</div>
+						<p class="text-secondary small fst-italic mt-auto">
+							LRLEDEV | 2025
+						</p>
+						<a
+							href="/conversor/"
+							class="btn btn-outline-primary btn-sm fw-bold mt-auto lang"
+							data-es="Probar Conversor"
+							data-en="Try Converter"
+							>Probar Conversor</a
 						>
 					</div>
 				</div>
@@ -949,16 +956,18 @@
 			<h2 class="section-title mb-4 lang" data-es="Contacto" data-en="Contact">
 				Contacto
 			</h2>
+
 			<form
 				id="contactForm"
 				method="POST"
-				class="mx-auto p-4 rounded-4 shadow-lg skill-card p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
+				class="mx-auto p-4 rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
 				style="
-					max-width: 400px;
+					max-width: 800px;
 					background: rgba(255, 255, 255, 0.08);
 					border: 1px solid rgba(59, 130, 246, 0.3);
 				">
 				{% csrf_token %}
+
 				<input
 					name="nombre"
 					id="nombreInput"
@@ -982,7 +991,7 @@
 				<textarea
 					name="mensaje"
 					id="mensajeInput"
-					rows="4"
+					rows="5"
 					placeholder="Mensaje / Message"
 					required
 					class="form-control bg-dark text-light mb-3 border-primary lang-placeholder rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
@@ -992,8 +1001,8 @@
 				<button
 					type="submit"
 					class="btn btn-primary w-100 fw-bold lang rounded-4 shadow-lg border border-primary bg-black bg-opacity-25"
-					data-es=" Enviar Mensaje"
-					data-en=" Send Message">
+					data-es="Enviar Mensaje"
+					data-en="Send Message">
 					Enviar Mensaje
 				</button>
 			</form>
@@ -1043,273 +1052,6 @@
 		</footer>
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-		<script>
-			// ✅ 1. Scroll automático al cargar
-			window.addEventListener("load", () => {
-				if (window.location.pathname === "/") {
-					window.location.hash = "#hero";
-				}
-			});
-			// ==== AÑO Y ANIMACIONES ====
-			const y = new Date().getFullYear();
-			document.getElementById("year").textContent = y;
-
-			// ==== PARTÍCULAS DE FONDO ====
-			const c = document.getElementById("particles"),
-				ctx = c.getContext("2d");
-			let p = [];
-			function r() {
-				c.width = innerWidth;
-				c.height = innerHeight;
-				i();
-			}
-			window.addEventListener("resize", r);
-			class P {
-				constructor(x, y) {
-					this.x = x;
-					this.y = y;
-					this.s = Math.random() * 2 + 1;
-					this.dx = (Math.random() - 0.5) * 0.8;
-					this.dy = (Math.random() - 0.5) * 0.8;
-					this.z = Math.random() * 2;
-				}
-				u() {
-					this.x += this.dx;
-					this.y += this.dy;
-					if (this.x < 0 || this.x > c.width) this.dx *= -1;
-					if (this.y < 0 || this.y > c.height) this.dy *= -1;
-				}
-				d() {
-					ctx.beginPath();
-					ctx.arc(this.x, this.y, this.s * this.z, 0, Math.PI * 2);
-					ctx.fillStyle = `rgba(59,130,246,${0.6 * this.z})`;
-					ctx.fill();
-				}
-			}
-			function i() {
-				p = [];
-				for (let n = 0; n < (c.width * c.height) / 25000; n++)
-					p.push(new P(Math.random() * c.width, Math.random() * c.height));
-			}
-			function con() {
-				for (let a = 0; a < p.length; a++) {
-					for (let b = a; b < p.length; b++) {
-						const dx = p[a].x - p[b].x,
-							dy = p[a].y - p[b].y,
-							d = Math.sqrt(dx * dx + dy * dy);
-						if (d < 120) {
-							ctx.strokeStyle = `rgba(59,130,246,${1 - d / 120})`;
-							ctx.lineWidth = 0.3;
-							ctx.beginPath();
-							ctx.moveTo(p[a].x, p[a].y);
-							ctx.lineTo(p[b].x, p[b].y);
-							ctx.stroke();
-						}
-					}
-				}
-			}
-			function a() {
-				ctx.clearRect(0, 0, c.width, c.height);
-				p.forEach((x) => {
-					x.u();
-					x.d();
-				});
-				con();
-				requestAnimationFrame(a);
-			}
-			r();
-			a();
-
-			// ==== HALO ====
-			const halo = document.getElementById("halo").getContext("2d");
-			function drawHalo() {
-				const g = halo.createRadialGradient(
-					innerWidth / 2,
-					innerHeight / 2,
-					100,
-					innerWidth / 2,
-					innerHeight / 2,
-					innerWidth / 1.2
-				);
-				g.addColorStop(0, "rgba(59,130,246,0.25)");
-				g.addColorStop(1, "transparent");
-				halo.clearRect(0, 0, innerWidth, innerHeight);
-				halo.fillStyle = g;
-				halo.fillRect(0, 0, innerWidth, innerHeight);
-				requestAnimationFrame(drawHalo);
-			}
-			drawHalo();
-
-			// ==== RELOJ ====
-			function clk() {
-				document.getElementById("clock").textContent =
-					new Date().toLocaleTimeString();
-			}
-			setInterval(clk, 1000);
-			clk();
-
-			// ==== VISITAS ====
-			let v = localStorage.getItem("visits") || 0;
-			v++;
-			localStorage.setItem("visits", v);
-
-			// ==== TRADUCCIÓN ====
-			const langSel = document.getElementById("langSelect");
-			function applyLang(l) {
-				updatePlaceholders(l);
-
-				document.querySelectorAll(".lang").forEach((e) => {
-					e.textContent = e.dataset[l];
-				});
-				localStorage.setItem("lang", l);
-
-				// Traducción de roles dinámicos y contador
-				if (l === "es") {
-					roles = [
-						"Ingeniero en Sistemas",
-						"Desarrollador Web",
-						"Analista de Datos",
-						"Creador de IA",
-					];
-					document.getElementById("visits").textContent = `👁️ Visitas: ${v}`;
-				} else {
-					roles = [
-						"Systems Engineer",
-						"Web Developer",
-						"Data Analyst",
-						"AI Creator",
-					];
-					document.getElementById("visits").textContent = `👁️ Visits: ${v}`;
-				}
-			}
-			langSel.value = localStorage.getItem("lang") || "es";
-			let roles = [];
-			applyLang(langSel.value);
-			langSel.onchange = () => applyLang(langSel.value);
-
-			// ==== ROL DINÁMICO ====
-			let rI = 0;
-			const dyn = document.getElementById("dynamicRole");
-			function changeRole() {
-				dyn.innerHTML = "";
-				const t = roles[rI];
-				let i = 0;
-				const ty = setInterval(() => {
-					dyn.innerHTML = `<span style='color:#3B82F6;text-shadow:0 0 ${
-						i % 10
-					}px #60A5FA'>${t.substring(0, i++)}</span>`;
-					if (i > t.length) {
-						clearInterval(ty);
-						setTimeout(() => {
-							rI = (rI + 1) % roles.length;
-							changeRole();
-						}, 1500);
-					}
-				}, 100);
-			}
-			changeRole();
-
-			// ==== APARICIÓN SUAVE ====
-			const sct = document.querySelectorAll("section"),
-				obs = new IntersectionObserver(
-					(e) => {
-						e.forEach((x) => {
-							if (x.isIntersecting) x.target.classList.add("visible");
-						});
-					},
-					{ threshold: 0.1 }
-				);
-			sct.forEach((x) => obs.observe(x));
-
-			// ==== FORMULARIO DE CONTACTO ====
-			document
-				.getElementById("contactForm")
-				.addEventListener("submit", async (e) => {
-					e.preventDefault();
-					const data = new FormData(e.target);
-					const res = await fetch("{% url 'enviar_mensaje' %}", {
-						method: "POST",
-						body: data,
-					});
-					if (res.ok) {
-						Swal.fire({
-							icon: "success",
-							title: "¡Mensaje enviado!",
-							text: "Tu mensaje fue enviado correctamente.",
-							confirmButtonColor: "#3b82f6",
-						});
-						e.target.reset();
-					} else {
-						Swal.fire({
-							icon: "error",
-							title: "Error",
-							text: "No se pudo enviar el mensaje.",
-							confirmButtonColor: "#3b82f6",
-						});
-					}
-				});
-			// ==== PLACEHOLDERS BILINGÜES ====
-			function updatePlaceholders(l) {
-				document.querySelectorAll(".lang-placeholder").forEach((input) => {
-					input.placeholder = input.dataset[l];
-				});
-			}
-		</script>
-		<script>
-			// Detectar sección activa al hacer clic (versión frontend)
-			const links = document.querySelectorAll(".nav-link");
-			links.forEach((link) => {
-				link.addEventListener("click", () => {
-					links.forEach((l) => l.classList.remove("active"));
-					link.classList.add("active");
-				});
-			});
-			// 🔹 Gestión de idioma
-			const langSelect = document.getElementById("langSelect");
-			const storedLang = localStorage.getItem("lang") || "es";
-			langSelect.value = storedLang;
-			applyLang(storedLang); // ✅ Ahora se ejecuta cuando el footer ya existe
-
-			langSelect.addEventListener("change", (e) => {
-				const lang = e.target.value;
-				localStorage.setItem("lang", lang);
-				applyLang(lang);
-			});
-
-			// 🔹 Función que cambia idioma
-			function applyLang(lang) {
-				// Traducción general
-				document.querySelectorAll(".lang").forEach((el) => {
-					if (el.dataset[lang]) el.textContent = el.dataset[lang];
-				});
-
-				// Traducción específica del footer
-				const phrase = document.getElementById("footer-phrase");
-				if (phrase && phrase.dataset[lang]) {
-					phrase.textContent = phrase.dataset[lang];
-				}
-			}
-			const sections = document.querySelectorAll("section[id]");
-			const navLinks = document.querySelectorAll(".nav-link");
-
-			window.addEventListener("scroll", () => {
-				let scrollPos = window.scrollY + 150; // margen superior para detección
-
-				sections.forEach((section) => {
-					const top = section.offsetTop;
-					const height = section.offsetHeight;
-					const id = section.getAttribute("id");
-
-					if (scrollPos >= top && scrollPos < top + height) {
-						navLinks.forEach((link) => {
-							link.classList.remove("active");
-							if (link.getAttribute("href") === `#${id}`) {
-								link.classList.add("active");
-							}
-						});
-					}
-				});
-			});
-		</script>
+		<script src="{% static 'js/welcome.js' %}"></script>
 	</body>
 </html>

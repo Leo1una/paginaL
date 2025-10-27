@@ -1,0 +1,103 @@
+{% extends 'base.html' %} {% block title %}Conversor de Unidades{% endblock %}
+{% block content %}
+<div class="container text-center mt-5">
+	<h1 class="display-5 fw-bold mb-4 text-glow" style="color: #60a5fa">
+		Conversor de Unidades
+	</h1>
+
+	<form
+		id="form-conversor"
+		method="POST"
+		class="w-50 mx-auto bg-black bg-opacity-25 p-4 rounded-4 border border-primary shadow-lg">
+		{% csrf_token %}
+		<div class="mb-3">
+			<label class="form-label text-light">Categoría:</label>
+			<select name="categoria" id="categoria" class="form-select">
+				{% for nombre in categorias.keys %}
+				<option value="{{ nombre }}">{{ nombre }}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<input
+				type="number"
+				step="any"
+				name="valor"
+				id="valor"
+				placeholder="Ingrese valor"
+				class="form-control text-center"
+				required />
+		</div>
+
+		<div class="row mb-3">
+			<div class="col">
+				<label class="text-light">Desde:</label>
+				<select name="origen" id="origen" class="form-select"></select>
+			</div>
+			<div class="col">
+				<label class="text-light">Hasta:</label>
+				<select name="destino" id="destino" class="form-select"></select>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-outline-primary fw-bold w-100">
+			Convertir
+		</button>
+	</form>
+
+	<!-- Aquí aparecerá el resultado sin recargar -->
+	<div id="resultado"></div>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const categorias = {{ categorias|safe }};
+		const selectCat = document.getElementById("categoria");
+		const origen = document.getElementById("origen");
+		const destino = document.getElementById("destino");
+		const form = document.getElementById("form-conversor");
+		const resultadoDiv = document.getElementById("resultado");
+
+		// 🔄 Actualizar opciones según categoría
+		function actualizarOpciones() {
+			const seleccion = selectCat.value;
+			const unidades = Object.keys(categorias[seleccion]);
+			origen.innerHTML = unidades.map(u => `<option>${u}</option>`).join("");
+			destino.innerHTML = unidades.map(u => `<option>${u}</option>`).join("");
+		}
+		selectCat.addEventListener("change", actualizarOpciones);
+		actualizarOpciones();
+
+		// 🚀 Enviar el formulario sin recargar la página
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
+
+			const formData = new FormData(form);
+			const response = await fetch("", {
+				method: "POST",
+				headers: {
+					"X-Requested-With": "XMLHttpRequest",
+				},
+				body: formData,
+			});
+
+			const data = await response.json();
+
+			if (data.resultado !== undefined) {
+				resultadoDiv.innerHTML = `
+					<div class="alert alert-success text-center mt-3 fw-bold list-group-item">
+						Resultado: ${parseFloat(data.resultado).toFixed(3)}
+					</div>
+				`;
+			} else {
+				resultadoDiv.innerHTML = `
+					<div class="alert alert-danger text-center mt-3 fw-bold list-group-item">
+						Error: No se pudo realizar la conversión.
+					</div>
+				`;
+			}
+		});
+	});
+</script>
+{% endblock %}
