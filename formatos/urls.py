@@ -21,4 +21,5 @@ urlpatterns = [
     path("ruleta/", views.ruleta, name="ruleta"),
     path("generador/", views.generador, name="generador"),
     path("conversor/", views.conversor, name="conversor"),
+    path("enviar_mensaje/", views.enviar_mensaje, name="enviar_mensaje"),
 ]

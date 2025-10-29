@@ -18,8 +18,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import ipaddress
 import csv
-from openpyxl import Workbook
-from openpyxl.styles import PatternFill, Font, Alignment
+from openpyxl.styles import  Font, Alignment
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import random, json
@@ -51,43 +50,48 @@ def primaria_evaluaciones(request):
 
 def enviar_mensaje(request):
     if request.method == "POST":
-        nombre = request.POST.get("nombre")
-        correo = request.POST.get("email")
-        mensaje = request.POST.get("mensaje")
+        try:
+            nombre = request.POST.get("nombre")
+            correo = request.POST.get("email")
+            mensaje = request.POST.get("mensaje")
 
-        # === Correo para ti ===
-        subject_admin = f"📬 Nuevo mensaje desde LRLEDEV | {nombre}"
-        html_admin = render_to_string("correo_template.html", {
-            "nombre": nombre,
-            "correo": correo,
-            "mensaje": mensaje,
-        })
+            # === Correo para ti ===
+            subject_admin = f"📬 Nuevo mensaje desde LRLEDEV | {nombre}"
+            html_admin = render_to_string("correo_template.html", {
+                "nombre": nombre,
+                "correo": correo,
+                "mensaje": mensaje,
+            })
 
-        email_admin = EmailMultiAlternatives(
-            subject_admin,
-            mensaje,
-            "leonardoluna@lrledev.com",
-            ["leonardoluna@lrledev.com"],
-        )
-        email_admin.attach_alternative(html_admin, "text/html")
-        email_admin.send()
+            email_admin = EmailMultiAlternatives(
+                subject_admin,
+                mensaje,
+                "leonardoluna@lrledev.com",
+                ["leonardoluna@lrledev.com"],
+            )
+            email_admin.attach_alternative(html_admin, "text/html")
+            email_admin.send()
 
-        # === Correo automático para el visitante ===
-        subject_user = "Gracias por contactarte con LRLEDEV ⚙️"
-        html_user = render_to_string("correo_respuesta.html", {
-            "nombre": nombre,
-        })
+            # === Correo automático para el visitante ===
+            subject_user = "Gracias por contactarte con LRLEDEV ⚙️"
+            html_user = render_to_string("correo_respuesta.html", {
+                "nombre": nombre,
+            })
 
-        email_user = EmailMultiAlternatives(
-            subject_user,
-            "Gracias por escribirnos. Te responderemos pronto.",
-            "leonardoluna@lrledev.com",
-            [correo],
-        )
-        email_user.attach_alternative(html_user, "text/html")
-        email_user.send()
+            email_user = EmailMultiAlternatives(
+                subject_user,
+                "Gracias por escribirnos. Te responderemos pronto.",
+                "leonardoluna@lrledev.com",
+                [correo],
+            )
+            email_user.attach_alternative(html_user, "text/html")
+            email_user.send()
 
-        return JsonResponse({"status": "ok"})
+            return JsonResponse({"status": "ok"})
+
+        except Exception as e:
+            # 👇 Esto mostrará el error real que causa el 500
+            return JsonResponse({"status": "error", "error": str(e)}, status=500)
 
 def qr(request):
     return render(request, 'qrgen/qr.html')
